@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ic_launcher_background">#1A3A5C</color>
-    <color name="colorPrimary">#1A3A5C</color>
-    <color name="colorAccent">#E8A020</color>
+    <!-- Warna Utama -->
+    <color name="colorPrimary">#1B4F72</color>
+    <color name="colorPrimaryDark">#1B4F72</color>
+    <color name="colorAccent">#EF4444</color>
+    <color name="colorButtonPrimary">#EF4444</color>
+    <color name="colorHeaderBg">#1B4F72</color>
 </resources>
