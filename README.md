@@ -114,3 +114,31 @@ di Pengaturan → Keamanan → Pinning Layar sebelum ujian dimulai.
 ---
 
 Dibuat dengan ❤️ untuk kemudahan ujian online tanpa iklan.
+
+---
+
+## Halaman Pengaturan (GitHub Pages)
+
+Tersedia halaman web pengaturan di `docs/index.html` yang bisa di-host di **GitHub Pages**.
+
+### Cara mengaktifkan di GitHub Pages:
+1. Push folder project ke repository GitHub
+2. Buka **Settings → Pages**
+3. Source: **Deploy from a branch → main → /docs**
+4. Akses di: `https://<username>.github.io/<repo>/`
+
+### Fitur halaman pengaturan:
+- 🖼 Upload logo (PNG/JPG/SVG) dengan drag & drop
+- ✏️ Ubah nama aplikasi, subtitle, dan nama resources
+- 🎨 Pilih warna header & tombol (color picker + preset palet)
+- 📱 Preview real-time tampilan layar utama Android
+- 📋 Export otomatis: `strings.xml`, `colors.xml`, `activity_main.xml`, `config.json`
+- 💾 Simpan konfigurasi di browser (localStorage)
+- ⬇ Unduh `config.json` langsung
+
+### Alur kerja:
+1. Buka halaman pengaturan
+2. Atur logo, nama, warna sesuai kebutuhan
+3. Salin kode dari tab **strings.xml** dan **colors.xml**
+4. Tempel ke file yang sesuai di Android Studio
+5. Rebuild APK

@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pengaturan — Emes Exam Browser</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #0F2440;
+      --navy2:   #1A3A5C;
+      --accent:  #2E7BF6;
+      --accent2: #4F9DFF;
+      --gold:    #F5A623;
+      --bg:      #F0F4FA;
+      --card:    #FFFFFF;
+      --border:  #D6E0EF;
+      --text:    #1A2B40;
+      --muted:   #6B7E96;
+      --success: #22C55E;
+      --danger:  #EF4444;
+      --radius:  14px;
+      --shadow:  0 4px 24px rgba(15,36,64,.10);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ─── TOP BAR ─────────────────────────────────────────────── */
+    .topbar {
+      background: var(--navy);
+      padding: 0 28px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 16px rgba(0,0,0,.25);
+    }
+    .topbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .topbar-brand .shield {
+      width: 32px; height: 32px;
+      background: var(--accent);
+      border-radius: 8px;
+      display: grid; place-items: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .topbar-brand span {
+      font-size: 15px; font-weight: 700;
+      color: #fff; letter-spacing: -.3px;
+    }
+    .topbar-brand span em {
+      font-style: normal; color: var(--accent2);
+    }
+    .topbar-badge {
+      background: rgba(255,255,255,.10);
+      color: #A8C0D8;
+      font-size: 11px; font-weight: 600;
+      padding: 4px 10px; border-radius: 20px;
+      letter-spacing: .5px;
+    }
+
+    /* ─── LAYOUT ──────────────────────────────────────────────── */
+    .page {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 36px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 28px;
+      align-items: start;
+    }
+    @media (max-width: 780px) {
+      .page { grid-template-columns: 1fr; }
+      .preview-col { order: -1; }
+    }
+
+    /* ─── SECTION CARDS ───────────────────────────────────────── */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .card + .card { margin-top: 20px; }
+
+    .card-header {
+      padding: 18px 24px 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .card-header .ico {
+      width: 34px; height: 34px;
+      border-radius: 9px;
+      display: grid; place-items: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+    .ico-blue  { background: #EBF3FF; }
+    .ico-gold  { background: #FEF3E2; }
+    .ico-green { background: #ECFDF5; }
+    .ico-red   { background: #FEF2F2; }
+
+    .card-header h2 {
+      font-size: 14px; font-weight: 700;
+      color: var(--text); letter-spacing: -.2px;
+    }
+    .card-header p {
+      font-size: 12px; color: var(--muted); margin-top: 1px;
+    }
+
+    .card-body { padding: 22px 24px; }
+
+    /* ─── FORM FIELDS ─────────────────────────────────────────── */
+    .field { margin-bottom: 20px; }
+    .field:last-child { margin-bottom: 0; }
+    .field label {
+      display: block;
+      font-size: 12px; font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase; letter-spacing: .7px;
+      margin-bottom: 7px;
+    }
+    .field input[type="text"],
+    .field input[type="url"],
+    .field textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 9px;
+      font-family: inherit; font-size: 14px;
+      color: var(--text);
+      background: #F8FAFD;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .field input[type="text"]:focus,
+    .field input[type="url"]:focus,
+    .field textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(46,123,246,.12);
+      background: #fff;
+    }
+    .field textarea { resize: vertical; min-height: 72px; }
+    .field .hint {
+      font-size: 11.5px; color: var(--muted);
+      margin-top: 5px; line-height: 1.5;
+    }
+
+    /* ─── LOGO UPLOAD ─────────────────────────────────────────── */
+    .logo-upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all .2s;
+      background: #F8FAFD;
+      position: relative;
+    }
+    .logo-upload-zone:hover,
+    .logo-upload-zone.drag { border-color: var(--accent); background: #EBF3FF; }
+    .logo-upload-zone input { display: none; }
+    .logo-preview-wrap {
+      display: flex; align-items: center;
+      gap: 16px; text-align: left;
+    }
+    .logo-preview-img {
+      width: 72px; height: 72px;
+      border-radius: 14px;
+      object-fit: contain;
+      background: #1A3A5C;
+      padding: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+    }
+    .logo-preview-img.empty {
+      display: grid; place-items: center;
+      font-size: 28px;
+    }
+    .logo-upload-text h3 { font-size: 14px; font-weight: 600; }
+    .logo-upload-text p  { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .logo-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+
+    /* ─── COLOR PICKER ────────────────────────────────────────── */
+    .color-row {
+      display: flex; gap: 12px; align-items: center;
+    }
+    .color-row input[type="color"] {
+      width: 44px; height: 44px;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 3px;
+      cursor: pointer;
+      background: #F8FAFD;
+      flex-shrink: 0;
+    }
+    .color-row .color-hex {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 9px;
+      background: #F8FAFD;
+      color: var(--text);
+      width: 120px;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .color-row .color-hex:focus { border-color: var(--accent); }
+    .color-presets {
+      display: flex; gap: 7px; flex-wrap: wrap; margin-top: 10px;
+    }
+    .color-dot {
+      width: 26px; height: 26px; border-radius: 50%;
+      cursor: pointer; border: 2px solid transparent;
+      transition: transform .15s, border-color .15s;
+    }
+    .color-dot:hover { transform: scale(1.15); }
+    .color-dot.active { border-color: var(--text); }
+
+    /* ─── BUTTONS ─────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 10px 18px;
+      border-radius: 9px;
+      font-family: inherit; font-size: 13.5px; font-weight: 600;
+      cursor: pointer; border: none; outline: none;
+      transition: all .18s;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(46,123,246,.30);
+    }
+    .btn-primary:hover { background: #1A6AE8; transform: translateY(-1px); }
+    .btn-secondary {
+      background: #EBF3FF; color: var(--accent);
+    }
+    .btn-secondary:hover { background: #D6E9FF; }
+    .btn-ghost {
+      background: transparent; color: var(--muted);
+      border: 1.5px solid var(--border);
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); background: #EBF3FF; }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-danger:hover { background: #DC2626; }
+    .btn-gold { background: var(--gold); color: #7A4F00; }
+    .btn-gold:hover { background: #E8951A; }
+    .btn-sm { padding: 7px 13px; font-size: 12.5px; }
+    .btn-full { width: 100%; justify-content: center; }
+
+    /* ─── PREVIEW PANEL ───────────────────────────────────────── */
+    .preview-col { position: sticky; top: 76px; }
+
+    .phone-frame {
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto;
+      background: #0D1B2E;
+      border-radius: 36px;
+      padding: 14px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.4), inset 0 0 0 1px rgba(255,255,255,.06);
+    }
+    .phone-screen {
+      border-radius: 26px;
+      overflow: hidden;
+      background: #F4F6FA;
+    }
+    /* Simulated Android app screen */
+    .sim-header {
+      display: flex; flex-direction: column;
+      align-items: center;
+      padding: 32px 20px 24px;
+      gap: 10px;
+    }
+    .sim-logo {
+      width: 60px; height: 60px;
+      border-radius: 14px;
+      object-fit: contain;
+      padding: 5px;
+    }
+    .sim-app-name {
+      font-size: 17px; font-weight: 800;
+      color: #fff; letter-spacing: -.3px;
+      text-align: center;
+    }
+    .sim-subtitle {
+      font-size: 11px; color: rgba(255,255,255,.65);
+      text-align: center;
+    }
+    .sim-body { background: #F4F6FA; padding: 16px; }
+    .sim-label {
+      font-size: 9px; font-weight: 700; color: #6B7280;
+      text-transform: uppercase; letter-spacing: .8px;
+      margin-bottom: 6px;
+    }
+    .sim-input {
+      background: #fff; border: 1.5px solid #D1D5DB;
+      border-radius: 8px; height: 36px;
+      margin-bottom: 10px;
+      display: flex; align-items: center;
+      padding: 0 10px;
+      font-size: 10px; color: #9CA3AF;
+    }
+    .sim-btn {
+      height: 36px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 11px; font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .sim-card {
+      background: #fff; border-radius: 10px;
+      padding: 12px; margin-top: 8px;
+      border: 1px solid #E5E7EB;
+    }
+    .sim-card-title {
+      font-size: 10px; font-weight: 700; color: #1A3A5C; margin-bottom: 6px;
+    }
+    .sim-feature {
+      font-size: 9.5px; color: #374151; margin-bottom: 3px;
+    }
+
+    /* ─── EXPORT SECTION ──────────────────────────────────────── */
+    .export-tabs {
+      display: flex; gap: 0; border-bottom: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+    .tab-btn {
+      padding: 9px 16px;
+      font-size: 12.5px; font-weight: 600;
+      cursor: pointer; border: none; background: none;
+      color: var(--muted);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      font-family: inherit;
+      transition: color .15s, border-color .15s;
+    }
+    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    .code-block {
+      background: #0F2440;
+      border-radius: 10px;
+      padding: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      color: #A8C0D8;
+      line-height: 1.7;
+      overflow-x: auto;
+      white-space: pre;
+      position: relative;
+    }
+    .code-block .kw  { color: #7DD3FC; }
+    .code-block .str { color: #86EFAC; }
+    .code-block .cmt { color: #4A6A88; }
+
+    .copy-btn {
+      position: absolute; top: 10px; right: 10px;
+      background: rgba(255,255,255,.10);
+      border: none; border-radius: 6px;
+      color: #A8C0D8; font-size: 11px; font-weight: 600;
+      padding: 5px 10px; cursor: pointer;
+      font-family: inherit;
+      transition: background .15s;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,.18); }
+
+    /* ─── TOAST ───────────────────────────────────────────────── */
+    .toast {
+      position: fixed; bottom: 24px; right: 24px;
+      background: var(--navy);
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: 13.5px; font-weight: 600;
+      box-shadow: 0 8px 28px rgba(0,0,0,.25);
+      display: flex; align-items: center; gap: 8px;
+      transform: translateY(80px); opacity: 0;
+      transition: all .3s cubic-bezier(.34,1.56,.64,1);
+      z-index: 999; pointer-events: none;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* ─── SAVED BADGE ─────────────────────────────────────────── */
+    .saved-indicator {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 600;
+      color: var(--success);
+      opacity: 0; transition: opacity .3s;
+    }
+    .saved-indicator.show { opacity: 1; }
+    .save-row {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      gap: 12px; flex-wrap: wrap;
+    }
+
+    /* ─── PAGE TITLE ──────────────────────────────────────────── */
+    .page-title {
+      grid-column: 1 / -1;
+      padding-bottom: 4px;
+    }
+    .page-title h1 {
+      font-size: 24px; font-weight: 800; color: var(--navy);
+      letter-spacing: -.5px;
+    }
+    .page-title p { font-size: 14px; color: var(--muted); margin-top: 4px; }
+
+    /* ─── DIVIDER ─────────────────────────────────────────────── */
+    .divider { height: 1px; background: var(--border); margin: 6px 0 20px; }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<nav class="topbar">
+  <a class="topbar-brand" href="#">
+    <div class="shield">🛡</div>
+    <span><em>Emes</em> Exam Browser</span>
+  </a>
+  <span class="topbar-badge">PENGATURAN</span>
+</nav>
+
+<!-- PAGE -->
+<div class="page">
+  <div class="page-title">
+    <h1>Konfigurasi Aplikasi</h1>
+    <p>Atur tampilan aplikasi lalu salin konfigurasi ke project Android Studio Anda.</p>
+  </div>
+
+  <!-- LEFT COL: FORM -->
+  <div class="form-col">
+
+    <!-- LOGO -->
+    <div class="card">
+      <div class="card-header">
+        <div class="ico ico-gold">🖼</div>
+        <div>
+          <h2>Logo Aplikasi</h2>
+          <p>Gambar yang tampil di layar utama &amp; ikon launcher</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="logo-upload-zone" id="dropZone" onclick="document.getElementById('logoInput').click()">
+          <input type="file" id="logoInput" accept="image/*" />
+          <div class="logo-preview-wrap">
+            <div class="logo-preview-img empty" id="logoPreviewBox">🛡</div>
+            <div class="logo-upload-text">
+              <h3 id="logoFileName">Belum ada logo</h3>
+              <p>Klik atau drag &amp; drop gambar PNG/JPG/SVG di sini</p>
+              <div class="logo-actions">
+                <button class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); document.getElementById('logoInput').click()">📁 Pilih File</button>
+                <button class="btn btn-ghost btn-sm" id="btnRemoveLogo" onclick="event.stopPropagation(); removeLogo()" style="display:none">✕ Hapus</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="hint" style="margin-top:10px">Ukuran disarankan: <strong>512×512 px</strong> atau lebih besar. Format: PNG dengan latar transparan akan tampil terbaik.</p>
+      </div>
+    </div>
+
+    <!-- TEKS -->
+    <div class="card">
+      <div class="card-header">
+        <div class="ico ico-blue">✏️</div>
+        <div>
+          <h2>Nama &amp; Deskripsi</h2>
+          <p>Teks yang muncul di header layar utama</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="field">
+          <label>Nama Aplikasi</label>
+          <input type="text" id="appName" value="Emes Exam Browser" maxlength="40"
+            placeholder="Contoh: SMKN 1 Exam Browser" oninput="updatePreview()" />
+          <p class="hint">Tampil sebagai judul besar di header. Maks. 40 karakter.</p>
+        </div>
+        <div class="field">
+          <label>Subtitle / Deskripsi</label>
+          <input type="text" id="appSubtitle" value="Safe browsing untuk ujian online" maxlength="60"
+            placeholder="Contoh: Portal CBT SMKN 1 Kota" oninput="updatePreview()" />
+          <p class="hint">Teks kecil di bawah nama. Maks. 60 karakter.</p>
+        </div>
+        <div class="field">
+          <label>Nama Aplikasi (strings.xml)</label>
+          <input type="text" id="appNameRes" value="Emes Exam Browser" maxlength="40"
+            placeholder="Sama atau versi singkat" oninput="updatePreview()" />
+          <p class="hint">Nama yang muncul di launcher dan notification bar Android.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- WARNA -->
+    <div class="card">
+      <div class="card-header">
+        <div class="ico ico-blue">🎨</div>
+        <div>
+          <h2>Warna Header</h2>
+          <p>Warna latar belakang header layar utama</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="field">
+          <label>Warna Utama (Header)</label>
+          <div class="color-row">
+            <input type="color" id="colorPrimary" value="#1A3A5C" oninput="syncHex('colorPrimary','hexPrimary')" />
+            <input class="color-hex" id="hexPrimary" type="text" value="#1A3A5C" maxlength="7"
+              oninput="syncColor('hexPrimary','colorPrimary')" spellcheck="false" />
+          </div>
+          <div class="color-presets" id="presetsHeader"></div>
+        </div>
+        <div class="field">
+          <label>Warna Tombol &amp; Aksen</label>
+          <div class="color-row">
+            <input type="color" id="colorAccent" value="#2E7BF6" oninput="syncHex('colorAccent','hexAccent')" />
+            <input class="color-hex" id="hexAccent" type="text" value="#2E7BF6" maxlength="7"
+              oninput="syncColor('hexAccent','colorAccent')" spellcheck="false" />
+          </div>
+          <div class="color-presets" id="presetsAccent"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXPORT -->
+    <div class="card">
+      <div class="card-header">
+        <div class="ico ico-green">📦</div>
+        <div>
+          <h2>Export Konfigurasi</h2>
+          <p>Salin kode yang sudah siap ditempel ke Android Studio</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="export-tabs">
+          <button class="tab-btn active" onclick="switchTab('tab-strings',this)">strings.xml</button>
+          <button class="tab-btn" onclick="switchTab('tab-colors',this)">colors.xml</button>
+          <button class="tab-btn" onclick="switchTab('tab-layout',this)">activity_main.xml</button>
+          <button class="tab-btn" onclick="switchTab('tab-json',this)">config.json</button>
+        </div>
+
+        <div class="tab-pane active" id="tab-strings">
+          <div class="code-block" id="codeStrings">
+            <button class="copy-btn" onclick="copyCode('codeStrings')">Salin</button>
+          </div>
+        </div>
+        <div class="tab-pane" id="tab-colors">
+          <div class="code-block" id="codeColors">
+            <button class="copy-btn" onclick="copyCode('codeColors')">Salin</button>
+          </div>
+        </div>
+        <div class="tab-pane" id="tab-layout">
+          <div class="code-block" id="codeLayout" style="font-size:10.5px">
+            <button class="copy-btn" onclick="copyCode('codeLayout')">Salin</button>
+          </div>
+        </div>
+        <div class="tab-pane" id="tab-json">
+          <div class="code-block" id="codeJson">
+            <button class="copy-btn" onclick="copyCode('codeJson')">Salin</button>
+          </div>
+          <p class="hint" style="margin-top:10px">File JSON ini bisa dihosting dan dibaca oleh aplikasi saat startup untuk konfigurasi dinamis tanpa rebuild APK.</p>
+        </div>
+
+        <div style="margin-top:18px" class="save-row">
+          <button class="btn btn-primary" onclick="saveConfig()">💾 Simpan ke Browser</button>
+          <button class="btn btn-gold" onclick="downloadJson()">⬇ Unduh config.json</button>
+          <span class="saved-indicator" id="savedIndicator">✓ Tersimpan</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANDUAN -->
+    <div class="card">
+      <div class="card-header">
+        <div class="ico ico-blue">📋</div>
+        <div>
+          <h2>Cara Menerapkan</h2>
+          <p>Langkah-langkah update project Android Studio</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <ol style="padding-left:18px; line-height:2; font-size:13.5px; color:var(--text)">
+          <li>Salin isi tab <strong>strings.xml</strong> → tempel ke <code style="background:#EBF3FF;padding:2px 6px;border-radius:4px;font-size:12px">app/src/main/res/values/strings.xml</code></li>
+          <li>Salin isi tab <strong>colors.xml</strong> → tempel ke <code style="background:#EBF3FF;padding:2px 6px;border-radius:4px;font-size:12px">app/src/main/res/values/colors.xml</code></li>
+          <li>Salin isi tab <strong>activity_main.xml</strong> → tempel ke <code style="background:#EBF3FF;padding:2px 6px;border-radius:4px;font-size:12px">app/src/main/res/layout/activity_main.xml</code></li>
+          <li>Ganti logo: klik kanan folder <code style="background:#EBF3FF;padding:2px 6px;border-radius:4px;font-size:12px">res</code> → <em>New → Image Asset</em> → pilih logo baru</li>
+          <li>Rebuild APK: <strong>Build → Build APK(s)</strong></li>
+        </ol>
+      </div>
+    </div>
+
+  </div><!-- /form-col -->
+
+  <!-- RIGHT COL: PREVIEW -->
+  <div class="preview-col">
+    <div class="card" style="padding:16px 16px 20px">
+      <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:14px;padding-left:4px">
+        📱 Preview Layar Utama
+      </div>
+      <div class="phone-frame">
+        <div class="phone-screen">
+          <!-- Simulated app -->
+          <div class="sim-header" id="simHeader" style="background:#1A3A5C">
+            <img class="sim-logo" id="simLogo" src="" alt="Logo"
+              style="display:none; background:#1A3A5C" />
+            <div class="logo-preview-img empty" id="simLogoPlaceholder"
+              style="width:60px;height:60px;font-size:24px;border-radius:12px;background:#0F2440;display:grid;place-items:center;color:#fff">🛡</div>
+            <div class="sim-app-name" id="simAppName">Emes Exam Browser</div>
+            <div class="sim-subtitle" id="simSubtitle">Safe browsing untuk ujian online</div>
+          </div>
+          <div class="sim-body">
+            <div class="sim-label">URL Ujian</div>
+            <div class="sim-input">https://ujian.sekolah.id/...</div>
+            <div class="sim-btn" id="simBtn" style="background:#2E7BF6">▶  Mulai Ujian</div>
+            <div class="sim-card">
+              <div class="sim-card-title">🛡 Fitur Keamanan</div>
+              <div class="sim-feature">✓ Tombol Back &amp; Home diblokir</div>
+              <div class="sim-feature">✓ Fullscreen tanpa gangguan</div>
+              <div class="sim-feature">✓ Keluar hanya dengan PIN pengawas</div>
+              <div class="sim-feature">✓ Scan QR Code URL ujian</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p style="text-align:center;font-size:11px;color:var(--muted);margin-top:12px">
+        Preview ini adalah simulasi. Tampilan aktual bisa sedikit berbeda.
+      </p>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span id="toastIcon">✓</span>
+  <span id="toastMsg">Tersimpan</span>
+</div>
+
+<script>
+// ─── STATE ─────────────────────────────────────────────────────
+let logoDataUrl = null;
+
+const COLOR_PRESETS_HEADER = [
+  '#1A3A5C','#0F2440','#1E3A5F','#1A1A2E','#2D2D44','#1B4F72',
+  '#154360','#006400','#4A0000','#2C3E50'
+];
+const COLOR_PRESETS_ACCENT = [
+  '#2E7BF6','#1A6AE8','#0EA5E9','#6366F1','#8B5CF6','#EC4899',
+  '#10B981','#F59E0B','#EF4444','#06B6D4'
+];
+
+// ─── INIT ───────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  renderPresets('presetsHeader', COLOR_PRESETS_HEADER, 'colorPrimary', 'hexPrimary');
+  renderPresets('presetsAccent', COLOR_PRESETS_ACCENT, 'colorAccent', 'hexAccent');
+  loadSavedConfig();
+  updatePreview();
+  updateAllCode();
+  setupDragDrop();
+});
+
+// ─── PRESETS ────────────────────────────────────────────────────
+function renderPresets(containerId, colors, colorId, hexId) {
+  const c = document.getElementById(containerId);
+  colors.forEach(hex => {
+    const dot = document.createElement('div');
+    dot.className = 'color-dot';
+    dot.style.background = hex;
+    dot.title = hex;
+    dot.onclick = () => {
+      document.getElementById(colorId).value = hex;
+      document.getElementById(hexId).value = hex;
+      updatePreview(); updateAllCode();
+      c.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+      dot.classList.add('active');
+    };
+    if (hex === document.getElementById(colorId).value) dot.classList.add('active');
+    c.appendChild(dot);
+  });
+}
+
+// ─── COLOR SYNC ─────────────────────────────────────────────────
+function syncHex(colorId, hexId) {
+  document.getElementById(hexId).value = document.getElementById(colorId).value;
+  updatePreview(); updateAllCode();
+}
+function syncColor(hexId, colorId) {
+  const v = document.getElementById(hexId).value;
+  if (/^#[0-9A-Fa-f]{6}$/.test(v)) {
+    document.getElementById(colorId).value = v;
+    updatePreview(); updateAllCode();
+  }
+}
+
+// ─── LOGO ───────────────────────────────────────────────────────
+document.getElementById('logoInput').addEventListener('change', e => {
+  const f = e.target.files[0];
+  if (f) readLogo(f);
+});
+function readLogo(file) {
+  const r = new FileReader();
+  r.onload = ev => {
+    logoDataUrl = ev.target.result;
+    document.getElementById('logoFileName').textContent = file.name;
+    // form preview
+    const box = document.getElementById('logoPreviewBox');
+    box.innerHTML = `<img src="${logoDataUrl}" style="width:100%;height:100%;object-fit:contain;border-radius:10px" />`;
+    box.classList.remove('empty');
+    document.getElementById('btnRemoveLogo').style.display = '';
+    updatePreview();
+  };
+  r.readAsDataURL(file);
+}
+function removeLogo() {
+  logoDataUrl = null;
+  const box = document.getElementById('logoPreviewBox');
+  box.innerHTML = '🛡';
+  box.classList.add('empty');
+  document.getElementById('logoFileName').textContent = 'Belum ada logo';
+  document.getElementById('btnRemoveLogo').style.display = 'none';
+  document.getElementById('logoInput').value = '';
+  updatePreview();
+}
+function setupDragDrop() {
+  const zone = document.getElementById('dropZone');
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('drag'));
+  zone.addEventListener('drop', e => {
+    e.preventDefault(); zone.classList.remove('drag');
+    const f = e.dataTransfer.files[0];
+    if (f && f.type.startsWith('image/')) readLogo(f);
+  });
+}
+
+// ─── PREVIEW UPDATE ─────────────────────────────────────────────
+function updatePreview() {
+  const name    = document.getElementById('appName').value || 'Emes Exam Browser';
+  const sub     = document.getElementById('appSubtitle').value || 'Safe browsing untuk ujian online';
+  const primary = document.getElementById('colorPrimary').value;
+  const accent  = document.getElementById('colorAccent').value;
+
+  document.getElementById('simAppName').textContent  = name;
+  document.getElementById('simSubtitle').textContent = sub;
+  document.getElementById('simHeader').style.background = primary;
+  document.getElementById('simBtn').style.background    = accent;
+
+  if (logoDataUrl) {
+    const img = document.getElementById('simLogo');
+    img.src = logoDataUrl;
+    img.style.display = '';
+    img.style.background = primary;
+    document.getElementById('simLogoPlaceholder').style.display = 'none';
+  } else {
+    document.getElementById('simLogo').style.display = 'none';
+    document.getElementById('simLogoPlaceholder').style.display = '';
+    document.getElementById('simLogoPlaceholder').style.background = darken(primary, 15);
+  }
+  updateAllCode();
+}
+
+function darken(hex, pct) {
+  const n = parseInt(hex.slice(1),16);
+  const r = Math.max(0,((n>>16)&255)-pct);
+  const g = Math.max(0,((n>>8)&255)-pct);
+  const b = Math.max(0,(n&255)-pct);
+  return '#'+[r,g,b].map(x=>x.toString(16).padStart(2,'0')).join('');
+}
+
+// ─── CODE GENERATION ────────────────────────────────────────────
+function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function updateAllCode() {
+  const name    = document.getElementById('appName').value || 'Emes Exam Browser';
+  const sub     = document.getElementById('appSubtitle').value || 'Safe browsing untuk ujian online';
+  const nameRes = document.getElementById('appNameRes').value || name;
+  const primary = document.getElementById('colorPrimary').value.toUpperCase();
+  const accent  = document.getElementById('colorAccent').value.toUpperCase();
+
+  // strings.xml
+  document.getElementById('codeStrings').innerHTML =
+    `<button class="copy-btn" onclick="copyCode('codeStrings')">Salin</button>` +
+    `<span class="cmt">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>\n` +
+    `<span class="kw">&lt;resources&gt;</span>\n` +
+    `    <span class="kw">&lt;string</span> name=<span class="str">"app_name"</span><span class="kw">&gt;</span>${esc(nameRes)}<span class="kw">&lt;/string&gt;</span>\n` +
+    `    <span class="kw">&lt;string</span> name=<span class="str">"app_title"</span><span class="kw">&gt;</span>${esc(name)}<span class="kw">&lt;/string&gt;</span>\n` +
+    `    <span class="kw">&lt;string</span> name=<span class="str">"app_description"</span><span class="kw">&gt;</span>${esc(sub)}<span class="kw">&lt;/string&gt;</span>\n` +
+    `<span class="kw">&lt;/resources&gt;</span>`;
+
+  // colors.xml
+  document.getElementById('codeColors').innerHTML =
+    `<button class="copy-btn" onclick="copyCode('codeColors')">Salin</button>` +
+    `<span class="cmt">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>\n` +
+    `<span class="kw">&lt;resources&gt;</span>\n` +
+    `    <span class="cmt">&lt;!-- Warna Utama --&gt;</span>\n` +
+    `    <span class="kw">&lt;color</span> name=<span class="str">"colorPrimary"</span><span class="kw">&gt;</span><span class="str">${primary}</span><span class="kw">&lt;/color&gt;</span>\n` +
+    `    <span class="kw">&lt;color</span> name=<span class="str">"colorPrimaryDark"</span><span class="kw">&gt;</span><span class="str">${primary}</span><span class="kw">&lt;/color&gt;</span>\n` +
+    `    <span class="kw">&lt;color</span> name=<span class="str">"colorAccent"</span><span class="kw">&gt;</span><span class="str">${accent}</span><span class="kw">&lt;/color&gt;</span>\n` +
+    `    <span class="kw">&lt;color</span> name=<span class="str">"colorButtonPrimary"</span><span class="kw">&gt;</span><span class="str">${accent}</span><span class="kw">&lt;/color&gt;</span>\n` +
+    `    <span class="kw">&lt;color</span> name=<span class="str">"colorHeaderBg"</span><span class="kw">&gt;</span><span class="str">${primary}</span><span class="kw">&lt;/color&gt;</span>\n` +
+    `<span class="kw">&lt;/resources&gt;</span>`;
+
+  // activity_main.xml (header section only)
+  document.getElementById('codeLayout').innerHTML =
+    `<button class="copy-btn" onclick="copyCode('codeLayout')">Salin</button>` +
+    `<span class="cmt">&lt;!-- Ganti bagian Header di activity_main.xml --&gt;</span>\n\n` +
+    `<span class="kw">&lt;LinearLayout</span>\n` +
+    `    android:background=<span class="str">"@color/colorHeaderBg"</span>\n` +
+    `    android:orientation=<span class="str">"vertical"</span>\n` +
+    `    android:gravity=<span class="str">"center_horizontal"</span>\n` +
+    `    android:paddingTop=<span class="str">"40dp"</span>\n` +
+    `    android:paddingBottom=<span class="str">"32dp"</span><span class="kw">&gt;</span>\n\n` +
+    `    <span class="kw">&lt;ImageView</span>\n` +
+    `        android:src=<span class="str">"@mipmap/ic_launcher"</span>\n` +
+    `        android:layout_width=<span class="str">"72dp"</span>\n` +
+    `        android:layout_height=<span class="str">"72dp"</span> <span class="kw">/&gt;</span>\n\n` +
+    `    <span class="kw">&lt;TextView</span>\n` +
+    `        android:text=<span class="str">"@string/app_title"</span>\n` +
+    `        android:textColor=<span class="str">"#FFFFFF"</span>\n` +
+    `        android:textSize=<span class="str">"20sp"</span>\n` +
+    `        android:textStyle=<span class="str">"bold"</span> <span class="kw">/&gt;</span>\n\n` +
+    `    <span class="kw">&lt;TextView</span>\n` +
+    `        android:text=<span class="str">"@string/app_description"</span>\n` +
+    `        android:textColor=<span class="str">"#99FFFFFF"</span>\n` +
+    `        android:textSize=<span class="str">"13sp"</span> <span class="kw">/&gt;</span>\n\n` +
+    `<span class="kw">&lt;/LinearLayout&gt;</span>`;
+
+  // config.json
+  const cfg = {
+    app_name: nameRes,
+    app_title: name,
+    app_description: sub,
+    colors: { primary: primary, accent: accent },
+    logo_url: logoDataUrl ? "(base64 tersimpan)" : null
+  };
+  document.getElementById('codeJson').innerHTML =
+    `<button class="copy-btn" onclick="copyCode('codeJson')">Salin</button>` +
+    esc(JSON.stringify(cfg, null, 2)).replace(/"([^"]+)":/g, `<span class="kw">"$1":</span>`).replace(/: "([^"]+)"/g, `: <span class="str">"$1"</span>`);
+}
+
+// ─── TAB SWITCH ─────────────────────────────────────────────────
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ─── COPY ───────────────────────────────────────────────────────
+function copyCode(id) {
+  const el = document.getElementById(id);
+  const text = el.innerText.replace(/^Salin\n/, '');
+  navigator.clipboard.writeText(text).then(() => showToast('✓', 'Kode disalin!'));
+}
+
+// ─── SAVE / LOAD ────────────────────────────────────────────────
+function saveConfig() {
+  const cfg = {
+    appName:    document.getElementById('appName').value,
+    appSubtitle:document.getElementById('appSubtitle').value,
+    appNameRes: document.getElementById('appNameRes').value,
+    colorPrimary: document.getElementById('colorPrimary').value,
+    colorAccent:  document.getElementById('colorAccent').value,
+    logoDataUrl: logoDataUrl
+  };
+  localStorage.setItem('emesExamConfig', JSON.stringify(cfg));
+  const ind = document.getElementById('savedIndicator');
+  ind.classList.add('show');
+  setTimeout(() => ind.classList.remove('show'), 2500);
+  showToast('💾', 'Konfigurasi tersimpan di browser');
+}
+function loadSavedConfig() {
+  try {
+    const raw = localStorage.getItem('emesExamConfig');
+    if (!raw) return;
+    const cfg = JSON.parse(raw);
+    if (cfg.appName)     document.getElementById('appName').value    = cfg.appName;
+    if (cfg.appSubtitle) document.getElementById('appSubtitle').value = cfg.appSubtitle;
+    if (cfg.appNameRes)  document.getElementById('appNameRes').value  = cfg.appNameRes;
+    if (cfg.colorPrimary) {
+      document.getElementById('colorPrimary').value = cfg.colorPrimary;
+      document.getElementById('hexPrimary').value   = cfg.colorPrimary;
+    }
+    if (cfg.colorAccent) {
+      document.getElementById('colorAccent').value = cfg.colorAccent;
+      document.getElementById('hexAccent').value   = cfg.colorAccent;
+    }
+    if (cfg.logoDataUrl) {
+      logoDataUrl = cfg.logoDataUrl;
+      const box = document.getElementById('logoPreviewBox');
+      box.innerHTML = `<img src="${logoDataUrl}" style="width:100%;height:100%;object-fit:contain;border-radius:10px" />`;
+      box.classList.remove('empty');
+      document.getElementById('logoFileName').textContent = 'Logo tersimpan';
+      document.getElementById('btnRemoveLogo').style.display = '';
+    }
+  } catch(e) {}
+}
+
+// ─── DOWNLOAD JSON ──────────────────────────────────────────────
+function downloadJson() {
+  const name    = document.getElementById('appName').value || 'Emes Exam Browser';
+  const sub     = document.getElementById('appSubtitle').value || '';
+  const nameRes = document.getElementById('appNameRes').value || name;
+  const primary = document.getElementById('colorPrimary').value.toUpperCase();
+  const accent  = document.getElementById('colorAccent').value.toUpperCase();
+  const cfg = {
+    app_name: nameRes, app_title: name, app_description: sub,
+    colors: { primary, accent },
+    logo_url: logoDataUrl || null,
+    generated_at: new Date().toISOString()
+  };
+  const blob = new Blob([JSON.stringify(cfg, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'emes-exam-config.json';
+  a.click();
+  showToast('⬇', 'config.json diunduh');
+}
+
+// ─── TOAST ───────────────────────────────────────────────────────
+let toastTimer;
+function showToast(icon, msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastIcon').textContent = icon;
+  document.getElementById('toastMsg').textContent  = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+}
+</script>
+</body>
+</html>

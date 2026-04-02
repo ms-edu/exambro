@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ic_launcher_background">#1A3A5C</color>
+    <!-- Warna utama — ubah via halaman pengaturan GitHub Pages -->
     <color name="colorPrimary">#1A3A5C</color>
-    <color name="colorAccent">#E8A020</color>
+    <color name="colorPrimaryDark">#1A3A5C</color>
+    <color name="colorAccent">#2E7BF6</color>
+    <color name="colorButtonPrimary">#2E7BF6</color>
+    <color name="colorHeaderBg">#1A3A5C</color>
+    <!-- Warna teks -->
+    <color name="white">#FFFFFF</color>
+    <color name="white60">#99FFFFFF</color>
+    <color name="gray">#6B7280</color>
+    <color name="darkText">#374151</color>
+    <color name="bgLight">#F4F6FA</color>
 </resources>
