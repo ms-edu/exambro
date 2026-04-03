@@ -1,785 +1,1378 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EzamBro APK Builder — Pengaturan</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>EzamBro APK Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
-    :root {
-      --navy:    #0F2440;
-      --navy2:   #1A3A5C;
-      --accent:  #2E7BF6;
-      --accent2: #4F9DFF;
-      --gold:    #F5A623;
-      --bg:      #F0F4FA;
-      --card:    #FFFFFF;
-      --border:  #D6E0EF;
-      --text:    #1A2B40;
-      --muted:   #6B7E96;
-      --success: #22C55E;
-      --danger:  #EF4444;
-      --radius:  14px;
-      --shadow:  0 4px 24px rgba(15,36,64,.10);
-    }
+:root{
+  --ink:       #0C1222;
+  --ink2:      #111827;
+  --ink3:      #1E293B;
+  --surface:   #16202E;
+  --surface2:  #1C2A3A;
+  --surface3:  #243044;
+  --border:    rgba(255,255,255,.08);
+  --border2:   rgba(255,255,255,.14);
+  --blue:      #3B82F6;
+  --blue2:     #60A5FA;
+  --cyan:      #06B6D4;
+  --gold:      #F59E0B;
+  --green:     #10B981;
+  --red:       #EF4444;
+  --text:      #E2E8F0;
+  --text2:     #94A3B8;
+  --text3:     #64748B;
+  --r:         12px;
+  --r2:        8px;
+  --shadow:    0 4px 24px rgba(0,0,0,.4);
+  --glow:      0 0 24px rgba(59,130,246,.25);
+}
 
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--surface3) var(--ink)}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--ink);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
 
-    /* TOP BAR */
-    .topbar {
-      background: var(--navy);
-      padding: 0 28px; height: 60px;
-      display: flex; align-items: center; justify-content: space-between;
-      position: sticky; top: 0; z-index: 100;
-      box-shadow: 0 2px 16px rgba(0,0,0,.25);
-    }
-    .topbar-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .topbar-brand .shield { width: 32px; height: 32px; background: var(--accent); border-radius: 8px; display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
-    .topbar-brand span { font-size: 15px; font-weight: 700; color: #fff; letter-spacing: -.3px; }
-    .topbar-brand span em { font-style: normal; color: var(--accent2); }
-    .topbar-right { display: flex; align-items: center; gap: 12px; }
-    .topbar-badge { background: rgba(255,255,255,.10); color: #A8C0D8; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; letter-spacing: .5px; }
-    .gh-link { color: #A8C0D8; font-size: 12px; font-weight: 600; text-decoration: none; padding: 5px 12px; border: 1px solid rgba(255,255,255,.15); border-radius: 8px; transition: all .15s; }
-    .gh-link:hover { background: rgba(255,255,255,.1); color: #fff; }
+/* ────── TOPBAR ────── */
+.topbar{
+  background:rgba(12,18,34,.92);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  height:56px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 24px;
+  position:sticky;top:0;z-index:200;
+}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand-icon{
+  width:32px;height:32px;border-radius:8px;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  display:grid;place-items:center;font-size:15px;flex-shrink:0;
+}
+.brand-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:#fff;letter-spacing:-.3px}
+.brand-name span{color:var(--blue2)}
+.topbar-right{display:flex;align-items:center;gap:8px}
+.pill{
+  font-size:10px;font-weight:700;letter-spacing:.6px;
+  padding:3px 10px;border-radius:20px;
+  background:rgba(59,130,246,.15);color:var(--blue2);
+  border:1px solid rgba(59,130,246,.25);
+}
+.gh-btn{
+  display:flex;align-items:center;gap:6px;
+  font-size:12px;font-weight:600;color:var(--text2);
+  text-decoration:none;padding:5px 12px;
+  border:1px solid var(--border2);border-radius:var(--r2);
+  transition:.15s;
+}
+.gh-btn:hover{color:#fff;border-color:var(--border2);background:var(--surface2)}
 
-    /* LAYOUT */
-    .page { max-width: 1120px; margin: 0 auto; padding: 36px 24px 80px; display: grid; grid-template-columns: 1fr 380px; gap: 28px; align-items: start; }
-    @media (max-width: 800px) { .page { grid-template-columns: 1fr; } .preview-col { order: -1; } }
-    .form-col { display: flex; flex-direction: column; gap: 20px; }
-    .page-title { grid-column: 1 / -1; padding-bottom: 4px; }
-    .page-title h1 { font-size: 24px; font-weight: 800; color: var(--navy); letter-spacing: -.5px; }
-    .page-title p { font-size: 14px; color: var(--muted); margin-top: 4px; }
+/* ────── LAYOUT ────── */
+.layout{
+  display:grid;
+  grid-template-columns:1fr 420px;
+  gap:0;
+  max-width:1280px;
+  margin:0 auto;
+  min-height:calc(100vh - 56px);
+}
+@media(max-width:900px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{position:relative;top:0!important;border-left:none;border-top:1px solid var(--border)}
+}
 
-    /* CARDS */
-    .card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--border); overflow: hidden; }
-    .card-header { display: flex; align-items: center; gap: 14px; padding: 18px 20px 14px; border-bottom: 1px solid var(--border); }
-    .card-header h2 { font-size: 15px; font-weight: 700; color: var(--navy); }
-    .card-header p { font-size: 12px; color: var(--muted); margin-top: 2px; }
-    .card-body { padding: 20px; }
-    .ico { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; font-size: 18px; flex-shrink: 0; }
-    .ico-gold { background: #FEF3C7; }
-    .ico-blue { background: #EFF6FF; }
-    .ico-green { background: #F0FDF4; }
-    .ico-purple { background: #F5F3FF; }
-    .ico-orange { background: #FFF7ED; }
+/* ────── MAIN FORM COLUMN ────── */
+.main-col{
+  padding:28px 28px 80px;
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;gap:6px;
+}
 
-    /* FIELDS */
-    .field { margin-bottom: 16px; }
-    .field:last-child { margin-bottom: 0; }
-    .field label { display: block; font-size: 12px; font-weight: 700; color: var(--navy2); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 7px; }
-    .field input[type=text], .field input[type=password], .field select {
-      width: 100%; height: 42px; padding: 0 14px;
-      border: 1.5px solid var(--border); border-radius: 9px;
-      font-size: 13.5px; font-family: inherit; color: var(--text); background: #fff;
-      transition: border-color .15s;
-    }
-    .field input:focus, .field select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(46,123,246,.12); }
-    .field .hint { font-size: 11.5px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
-    .field .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+/* ────── SECTION HEADERS ────── */
+.section-label{
+  display:flex;align-items:center;gap:8px;
+  font-size:10px;font-weight:700;letter-spacing:1px;
+  color:var(--text3);text-transform:uppercase;
+  margin:16px 0 6px;padding-left:2px;
+}
+.section-label::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,var(--border2),transparent);
+}
 
-    /* COLOR PICKER */
-    .color-row { display: flex; align-items: center; gap: 10px; }
-    .color-row input[type=color] { width: 42px; height: 42px; padding: 3px; border: 1.5px solid var(--border); border-radius: 9px; cursor: pointer; background: #fff; }
-    .color-hex { flex: 1; height: 42px; padding: 0 12px; border: 1.5px solid var(--border); border-radius: 9px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text); }
-    .color-hex:focus { outline: none; border-color: var(--accent); }
-    .color-presets { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
-    .color-swatch { width: 24px; height: 24px; border-radius: 6px; cursor: pointer; border: 2px solid transparent; transition: transform .15s, border-color .15s; }
-    .color-swatch:hover { transform: scale(1.2); border-color: rgba(0,0,0,.2); }
+/* ────── CARDS ────── */
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  overflow:hidden;
+  transition:border-color .2s;
+}
+.card:hover{border-color:var(--border2)}
+.card-head{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 18px 12px;
+  border-bottom:1px solid var(--border);
+}
+.card-head h3{font-size:13.5px;font-weight:600;color:var(--text)}
+.card-head p{font-size:11.5px;color:var(--text3);margin-top:1px}
+.card-ico{
+  width:34px;height:34px;border-radius:9px;
+  display:grid;place-items:center;font-size:16px;flex-shrink:0;
+}
+.ico-blue{background:rgba(59,130,246,.15)}
+.ico-gold{background:rgba(245,158,11,.15)}
+.ico-green{background:rgba(16,185,129,.15)}
+.ico-cyan{background:rgba(6,182,212,.15)}
+.ico-red{background:rgba(239,68,68,.12)}
+.ico-purple{background:rgba(139,92,246,.15)}
+.card-body{padding:18px}
+.card-body>*+*{margin-top:14px}
 
-    /* LOGO UPLOAD */
-    .logo-upload-zone { border: 2px dashed var(--border); border-radius: 12px; padding: 20px; cursor: pointer; transition: border-color .2s, background .2s; }
-    .logo-upload-zone:hover { border-color: var(--accent); background: #F0F7FF; }
-    .logo-upload-zone input[type=file] { display: none; }
-    .logo-preview-wrap { display: flex; align-items: center; gap: 16px; }
-    .logo-preview-img { width: 72px; height: 72px; border-radius: 14px; background: #E8F0FE; display: grid; place-items: center; font-size: 30px; flex-shrink: 0; overflow: hidden; }
-    .logo-preview-img.empty { color: #9CA3AF; }
-    .logo-upload-text h3 { font-size: 14px; font-weight: 700; color: var(--navy); }
-    .logo-upload-text p { font-size: 12px; color: var(--muted); margin-top: 4px; }
-    .logo-actions { display: flex; gap: 8px; margin-top: 10px; }
+/* Card variant: featured (build card) */
+.card-featured{
+  background:linear-gradient(145deg, #0D1F35 0%, #112240 100%);
+  border-color:rgba(59,130,246,.3);
+  box-shadow:var(--glow);
+}
+.card-featured .card-head{
+  background:linear-gradient(90deg,rgba(59,130,246,.1),transparent);
+  border-bottom-color:rgba(59,130,246,.2);
+}
 
-    /* BUTTONS */
-    .btn { display: inline-flex; align-items: center; gap: 7px; height: 38px; padding: 0 18px; border-radius: 9px; font-size: 13px; font-weight: 700; font-family: inherit; cursor: pointer; border: none; transition: all .15s; white-space: nowrap; }
-    .btn-primary { background: var(--accent); color: #fff; }
-    .btn-primary:hover { background: #1E6AE5; }
-    .btn-primary:disabled { background: #93C5FD; cursor: not-allowed; }
-    .btn-secondary { background: #EFF6FF; color: var(--accent); border: 1.5px solid #BFDBFE; }
-    .btn-secondary:hover { background: #DBEAFE; }
-    .btn-gold { background: var(--gold); color: #fff; }
-    .btn-gold:hover { background: #E09520; }
-    .btn-ghost { background: transparent; color: var(--muted); border: 1.5px solid var(--border); }
-    .btn-ghost:hover { background: var(--bg); }
-    .btn-danger { background: var(--danger); color: #fff; }
-    .btn-danger:hover { background: #DC2626; }
-    .btn-success { background: var(--success); color: #fff; }
-    .btn-sm { height: 32px; padding: 0 12px; font-size: 12px; }
+/* ────── FORM FIELDS ────── */
+.field{display:flex;flex-direction:column;gap:6px}
+.field+.field{margin-top:14px}
+.field label{
+  font-size:11px;font-weight:700;letter-spacing:.5px;
+  text-transform:uppercase;color:var(--text2);
+}
+.field input[type=text],.field input[type=password]{
+  height:40px;padding:0 12px;
+  background:var(--ink3);
+  border:1px solid var(--border2);
+  border-radius:var(--r2);
+  font-size:13px;font-family:'DM Sans',sans-serif;
+  color:var(--text);
+  transition:border-color .15s,box-shadow .15s;
+}
+.field input:focus{
+  outline:none;
+  border-color:var(--blue);
+  box-shadow:0 0 0 3px rgba(59,130,246,.15);
+}
+.hint{font-size:11px;color:var(--text3);line-height:1.6}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row2 .field{margin:0}
 
-    /* EXPORT TABS */
-    .export-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 16px; overflow-x: auto; }
-    .tab-btn { padding: 9px 16px; font-size: 12.5px; font-weight: 600; cursor: pointer; border: none; background: none; color: var(--muted); border-bottom: 2px solid transparent; margin-bottom: -1px; font-family: inherit; transition: color .15s, border-color .15s; white-space: nowrap; }
-    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
-    .tab-pane { display: none; }
-    .tab-pane.active { display: block; }
+/* ────── COLOR PICKER ────── */
+.color-row{display:flex;align-items:center;gap:8px}
+.color-row input[type=color]{
+  width:40px;height:40px;padding:3px;
+  border:1px solid var(--border2);border-radius:var(--r2);
+  cursor:pointer;background:var(--ink3);flex-shrink:0;
+}
+.color-hex{
+  flex:1;height:40px;padding:0 12px;
+  background:var(--ink3);border:1px solid var(--border2);border-radius:var(--r2);
+  font-family:'DM Mono',monospace;font-size:13px;color:var(--text);
+  transition:border-color .15s;
+}
+.color-hex:focus{outline:none;border-color:var(--blue)}
+.color-swatches{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.swatch{
+  width:22px;height:22px;border-radius:6px;cursor:pointer;
+  border:2px solid transparent;
+  transition:transform .15s,border-color .15s;
+}
+.swatch:hover{transform:scale(1.3);border-color:rgba(255,255,255,.4)}
 
-    /* CODE BLOCK */
-    .code-block { background: #0F2440; border-radius: 10px; padding: 16px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: #A8C0D8; line-height: 1.7; overflow-x: auto; white-space: pre; position: relative; }
-    .code-block .kw { color: #7DD3FC; }
-    .code-block .str { color: #86EFAC; }
-    .code-block .cmt { color: #4A6A88; }
-    .copy-btn { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,.10); border: none; border-radius: 6px; color: #A8C0D8; font-size: 11px; font-weight: 600; padding: 5px 10px; cursor: pointer; font-family: inherit; transition: background .15s; }
-    .copy-btn:hover { background: rgba(255,255,255,.18); }
+/* ────── UPLOAD ZONE ────── */
+.upload-zone{
+  border:2px dashed var(--border2);
+  border-radius:var(--r);padding:16px;cursor:pointer;
+  transition:border-color .2s,background .2s;
+}
+.upload-zone:hover{border-color:var(--blue);background:rgba(59,130,246,.05)}
+.upload-zone input[type=file]{display:none}
+.upload-inner{display:flex;align-items:center;gap:14px}
+.upload-thumb{
+  width:64px;height:64px;border-radius:12px;
+  background:var(--ink3);border:1px solid var(--border2);
+  display:grid;place-items:center;font-size:26px;flex-shrink:0;overflow:hidden;
+}
+.upload-text h4{font-size:13px;font-weight:600;color:var(--text)}
+.upload-text p{font-size:11.5px;color:var(--text3);margin-top:3px}
+.upload-actions{display:flex;gap:7px;margin-top:8px}
 
-    /* SAVE ROW */
-    .save-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-    .saved-indicator { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--success); opacity: 0; transition: opacity .3s; }
-    .saved-indicator.show { opacity: 1; }
+/* ────── BUTTONS ────── */
+.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  height:36px;padding:0 16px;border-radius:var(--r2);
+  font-size:12.5px;font-weight:600;font-family:'DM Sans',sans-serif;
+  cursor:pointer;border:none;transition:.15s;white-space:nowrap;
+}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-primary:hover{background:#2563EB}
+.btn-primary:disabled{background:#1D3A6B;color:#4A6FA5;cursor:not-allowed}
+.btn-secondary{background:rgba(59,130,246,.12);color:var(--blue2);border:1px solid rgba(59,130,246,.25)}
+.btn-secondary:hover{background:rgba(59,130,246,.2)}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border2)}
+.btn-ghost:hover{background:var(--surface2)}
+.btn-danger{background:rgba(239,68,68,.15);color:#FCA5A5;border:1px solid rgba(239,68,68,.25)}
+.btn-danger:hover{background:rgba(239,68,68,.25)}
+.btn-gold{background:var(--gold);color:#000;font-weight:700}
+.btn-gold:hover{background:#D97706}
+.btn-big{height:48px;font-size:14px;font-weight:700;border-radius:var(--r);width:100%;justify-content:center}
+.btn-sm{height:30px;padding:0 10px;font-size:11.5px}
 
-    /* PHONE PREVIEW */
-    .phone-frame { width: 220px; height: 440px; border: 4px solid #1A2B40; border-radius: 28px; margin: 0 auto; overflow: hidden; box-shadow: 0 12px 40px rgba(0,0,0,.2); background: #fff; position: relative; }
-    .phone-screen { width: 100%; height: 100%; overflow: hidden; display: flex; flex-direction: column; }
-    .sim-header { padding: 22px 14px 18px; display: flex; flex-direction: column; align-items: center; gap: 5px; }
-    .sim-feat-item { font-size:8px;color:#374151;margin-bottom:5px;background:#F8FAFF;border-radius:8px;padding:5px 8px;display:flex;align-items:center;gap:6px; }
-    .sim-feat-check { width:14px;height:14px;border-radius:50%;background:#2E7BF6;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:7px;font-weight:bold;flex-shrink:0; }
-    .sim-logo { width: 48px; height: 48px; object-fit: contain; border-radius: 10px; }
-    .sim-app-name { font-size: 13px; font-weight: 800; color: #fff; text-align: center; }
-    .sim-subtitle { font-size: 9.5px; color: rgba(255,255,255,.7); text-align: center; }
-    .sim-body { flex: 1; padding: 14px 12px; overflow: auto; }
-    .sim-label { font-size: 8px; font-weight: 700; color: #6B7280; text-transform: uppercase; letter-spacing: .8px; margin-bottom: 5px; }
-    .sim-input { height: 28px; border: 1.5px solid #E5E7EB; border-radius: 6px; margin-bottom: 8px; display: flex; align-items: center; padding: 0 8px; font-size: 8.5px; color: #9CA3AF; font-family: monospace; }
-    .sim-btn { height: 32px; border-radius: 7px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 9.5px; font-weight: 700; margin-bottom: 10px; }
-    .sim-card { background: #fff; border-radius: 8px; padding: 10px; border: 1px solid #E5E7EB; }
-    .sim-card-title { font-size: 9px; font-weight: 700; color: #1A3A5C; margin-bottom: 5px; }
-    .sim-feature { font-size: 8.5px; color: #374151; margin-bottom: 3px; }
+/* ────── TOGGLE TABS ────── */
+.seg{
+  display:inline-flex;
+  background:var(--ink3);
+  border:1px solid var(--border2);
+  border-radius:var(--r2);
+  padding:3px;gap:3px;
+}
+.seg-btn{
+  flex:1;padding:6px 14px;border-radius:6px;
+  font-size:12px;font-weight:600;
+  font-family:'DM Sans',sans-serif;
+  cursor:pointer;border:none;background:transparent;
+  color:var(--text3);transition:.15s;
+}
+.seg-btn.on{background:var(--surface3);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.3)}
 
-    /* ── BUILD APK PANEL ── */
-    .build-panel { border: 2px solid var(--accent); }
-    .build-panel .card-header { background: linear-gradient(135deg, #0F2440 0%, #1A3A5C 100%); border-bottom-color: rgba(255,255,255,.1); }
-    .build-panel .card-header h2 { color: #fff; }
-    .build-panel .card-header p { color: rgba(255,255,255,.6); }
-    .build-panel .ico-purple { background: rgba(255,255,255,.12); }
+/* ────── EXPORT TABS ────── */
+.etabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:14px}
+.etab{
+  padding:8px 14px;font-size:12px;font-weight:600;
+  cursor:pointer;border:none;background:none;
+  color:var(--text3);font-family:'DM Sans',sans-serif;
+  border-bottom:2px solid transparent;margin-bottom:-1px;
+  transition:.15s;
+}
+.etab.on{color:var(--blue2);border-bottom-color:var(--blue)}
+.epane{display:none}
+.epane.on{display:block}
 
-    .gh-token-field { position: relative; }
-    .gh-token-field input { padding-right: 44px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 1px; }
-    .toggle-vis { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 16px; color: var(--muted); }
+/* ────── CODE BLOCK ────── */
+.codeblock{
+  background:var(--ink);
+  border:1px solid var(--border);
+  border-radius:var(--r2);
+  padding:14px;
+  font-family:'DM Mono',monospace;
+  font-size:11px;color:#94A3B8;
+  line-height:1.8;overflow-x:auto;white-space:pre;
+  position:relative;max-height:220px;overflow-y:auto;
+}
+.codeblock .kw{color:#7DD3FC}
+.codeblock .str{color:#86EFAC}
+.codeblock .cmt{color:#334155}
+.copy-btn{
+  position:absolute;top:8px;right:8px;
+  background:rgba(255,255,255,.07);border:none;border-radius:5px;
+  color:var(--text3);font-size:10.5px;font-weight:600;
+  padding:4px 9px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.15s;
+}
+.copy-btn:hover{background:rgba(255,255,255,.14);color:var(--text)}
 
-    .build-status-box { background: #F8FAFC; border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-top: 16px; display: none; }
-    .build-status-box.visible { display: block; }
-    .build-run { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 8px; background: #fff; border: 1px solid var(--border); }
-    .run-status { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-    .run-status.queued    { background: #F59E0B; }
-    .run-status.in_progress { background: #3B82F6; animation: pulse 1s infinite; }
-    .run-status.completed-success { background: #22C55E; }
-    .run-status.completed-failure { background: #EF4444; }
-    .run-status.waiting   { background: #9CA3AF; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
-    .run-meta { flex: 1; min-width: 0; }
-    .run-name { font-size: 13px; font-weight: 700; color: var(--navy); }
-    .run-detail { font-size: 11px; color: var(--muted); margin-top: 2px; }
-    .run-link { font-size: 11px; color: var(--accent); text-decoration: none; font-weight: 600; flex-shrink: 0; }
-    .run-link:hover { text-decoration: underline; }
+/* ────── PIN FIELD ────── */
+.pin-wrap{display:flex;gap:8px;align-items:center}
+.pin-wrap input{
+  flex:1;height:40px;font-family:'DM Mono',monospace;
+  font-size:20px;letter-spacing:10px;text-align:center;
+  background:var(--ink3);border:1px solid var(--border2);
+  border-radius:var(--r2);color:var(--text);transition:.15s;
+}
+.pin-wrap input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(59,130,246,.15)}
+.pin-badge{
+  font-size:10.5px;font-weight:700;padding:3px 9px;
+  border-radius:5px;flex-shrink:0;
+}
+.pin-weak{background:rgba(239,68,68,.15);color:#FCA5A5}
+.pin-ok{background:rgba(16,185,129,.15);color:#6EE7B7}
 
-    .build-log { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #A8C0D8; background: #0F2440; border-radius: 8px; padding: 12px; margin-top: 12px; max-height: 180px; overflow-y: auto; white-space: pre-wrap; word-break: break-all; line-height: 1.6; }
-    .build-log .ok { color: #86EFAC; }
-    .build-log .err { color: #FCA5A5; }
-    .build-log .dim { color: #4A6A88; }
+/* ────── TOKEN FIELD ────── */
+.token-wrap{position:relative}
+.token-wrap input{padding-right:44px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.5px}
+.eye-btn{
+  position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;font-size:15px;color:var(--text3);
+  transition:.15s;
+}
+.eye-btn:hover{color:var(--text)}
 
-    .artifact-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; padding: 10px 18px; background: var(--success); color: #fff; border-radius: 9px; font-size: 13px; font-weight: 700; text-decoration: none; transition: background .15s; }
-    .artifact-link:hover { background: #16A34A; }
+/* ────── BUILD STATUS ────── */
+.build-status{
+  background:var(--ink);border:1px solid var(--border);
+  border-radius:var(--r);padding:14px;margin-top:14px;display:none;
+}
+.build-status.show{display:block}
+.run-row{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 12px;border-radius:var(--r2);
+  background:var(--surface2);border:1px solid var(--border);
+}
+.run-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.run-dot.wait{background:var(--text3)}
+.run-dot.queue{background:var(--gold)}
+.run-dot.run{background:var(--blue);animation:pulse 1s infinite}
+.run-dot.ok{background:var(--green)}
+.run-dot.fail{background:var(--red)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.run-meta{flex:1;min-width:0}
+.run-title{font-size:12.5px;font-weight:600;color:var(--text)}
+.run-sub{font-size:11px;color:var(--text3);margin-top:1px}
+.run-link{font-size:11px;color:var(--blue2);text-decoration:none;font-weight:600;flex-shrink:0}
+.run-link:hover{text-decoration:underline}
+.build-log{
+  font-family:'DM Mono',monospace;font-size:10.5px;color:#475569;
+  background:var(--ink);border-radius:6px;padding:10px;
+  margin-top:10px;max-height:160px;overflow-y:auto;
+  white-space:pre-wrap;word-break:break-all;line-height:1.7;
+  border:1px solid var(--border);
+}
+.build-log .ok{color:#6EE7B7}
+.build-log .err{color:#FCA5A5}
+.build-log .dim{color:#334155}
+.artifact-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  margin-top:12px;padding:10px 18px;
+  background:var(--green);color:#fff;
+  border-radius:var(--r2);font-size:12.5px;font-weight:700;
+  text-decoration:none;transition:.15s;
+}
+.artifact-btn:hover{background:#059669}
 
-    .pin-field { display: flex; gap: 10px; align-items: center; }
-    .pin-field input { flex: 1; font-family: 'JetBrains Mono', monospace; font-size: 18px; letter-spacing: 8px; text-align: center; }
-    .pin-strength { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 5px; flex-shrink: 0; }
-    .pin-weak { background: #FEE2E2; color: #DC2626; }
-    .pin-ok { background: #DCFCE7; color: #16A34A; }
+/* ────── SAVE ROW ────── */
+.save-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-top:4px}
+.saved-ok{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:12px;font-weight:600;color:var(--green);
+  opacity:0;transition:.3s;
+}
+.saved-ok.show{opacity:1}
 
-    .divider { height: 1px; background: var(--border); margin: 6px 0 20px; }
+/* ────── SIDEBAR (PREVIEW) ────── */
+.sidebar{
+  position:sticky;top:56px;
+  height:calc(100vh - 56px);
+  overflow-y:auto;
+  background:var(--ink2);
+  padding:20px 20px 40px;
+  display:flex;flex-direction:column;gap:16px;
+}
 
-    /* ─── HEADER BG PANEL ─────────────────────────────────────────── */
-    .hbg-tabs { display: flex; gap: 0; border: 1.5px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 16px; }
-    .hbg-tab  { flex: 1; padding: 9px 0; text-align: center; font-size: 12.5px; font-weight: 700; cursor: pointer; border: none; background: none; font-family: inherit; color: var(--muted); transition: all .15s; }
-    .hbg-tab.active { background: var(--accent); color: #fff; }
-    .hbg-pane { display: none; }
-    .hbg-pane.active { display: block; }
+/* Preview tab switcher */
+.prev-tabs{
+  display:flex;background:var(--ink3);
+  border:1px solid var(--border);border-radius:var(--r);
+  padding:4px;gap:3px;
+}
+.prev-tab{
+  flex:1;padding:8px 0;text-align:center;
+  font-size:12px;font-weight:600;
+  font-family:'DM Sans',sans-serif;cursor:pointer;border:none;
+  background:transparent;color:var(--text3);border-radius:var(--r2);transition:.15s;
+}
+.prev-tab.on{background:var(--surface3);color:var(--text);box-shadow:0 1px 6px rgba(0,0,0,.3)}
 
-    .img-drop-zone { border: 2px dashed var(--border); border-radius: 12px; padding: 18px; cursor: pointer; transition: border-color .2s, background .2s; text-align: center; }
-    .img-drop-zone:hover { border-color: var(--accent); background: #F0F7FF; }
-    .img-drop-zone input[type=file] { display: none; }
-    .img-preview-box { width: 100%; height: 90px; border-radius: 10px; background: #1A3A5C; overflow: hidden; position: relative; margin-bottom: 10px; }
-    .img-preview-box img { width:100%; height:100%; object-fit:cover; display:none; }
-    .img-preview-box .overlay-badge { position:absolute;bottom:6px;right:8px;background:rgba(0,0,0,.5);color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px; }
-    .overlay-slider-wrap { display:flex; align-items:center; gap:10px; margin-top:8px; }
-    .overlay-slider-wrap label { font-size:11.5px; font-weight:600; color:var(--navy2); white-space:nowrap; }
-    .overlay-slider-wrap input[type=range] { flex:1; accent-color:var(--accent); }
-    .overlay-slider-wrap span { font-size:11.5px; font-weight:700; color:var(--accent); width:32px; text-align:right; }
-    .section-sep { height: 16px; }
+/* Phone frame */
+.phone-outer{
+  width:220px;height:460px;
+  margin:0 auto;
+  position:relative;
+}
+.phone-shell{
+  width:100%;height:100%;
+  background:linear-gradient(160deg,#2D3748,#1A202C);
+  border-radius:38px;
+  padding:8px;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.06),
+    0 20px 60px rgba(0,0,0,.7),
+    inset 0 1px 0 rgba(255,255,255,.12);
+}
+.phone-screen{
+  width:100%;height:100%;
+  border-radius:32px;
+  overflow:hidden;
+  background:#fff;
+  position:relative;
+  display:flex;flex-direction:column;
+}
+/* Notch */
+.phone-notch{
+  position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:56px;height:10px;
+  background:linear-gradient(160deg,#2D3748,#1A202C);
+  border-radius:0 0 8px 8px;
+  z-index:10;
+}
 
-    /* TOAST */
-    .toast { position: fixed; bottom: 24px; right: 24px; background: var(--navy); color: #fff; padding: 12px 18px; border-radius: 10px; font-size: 13.5px; font-weight: 600; box-shadow: 0 8px 28px rgba(0,0,0,.25); display: flex; align-items: center; gap: 8px; transform: translateY(80px); opacity: 0; transition: all .3s cubic-bezier(.34,1.56,.64,1); z-index: 999; pointer-events: none; }
-    .toast.show { transform: translateY(0); opacity: 1; }
-  </style>
+/* ── SPLASH SCREEN SIM ── */
+#simSplash{
+  width:100%;height:100%;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  position:relative;padding:24px 20px;
+  transition:background-color .4s;
+}
+.sp-logo-ring{
+  width:80px;height:80px;border-radius:20px;
+  background:rgba(255,255,255,.12);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:18px;overflow:hidden;flex-shrink:0;
+  box-shadow:0 8px 32px rgba(0,0,0,.35);
+  transition:width .3s,height .3s;
+}
+.sp-logo-ring img{width:100%;height:100%;object-fit:contain;border-radius:16px}
+.sp-logo-ring .sp-emoji{font-size:36px;line-height:1}
+.sp-name{
+  font-size:15px;font-weight:800;color:#fff;
+  text-align:center;letter-spacing:.2px;
+  text-shadow:0 2px 8px rgba(0,0,0,.4);
+  margin-bottom:5px;
+}
+.sp-line{width:40px;height:2px;background:rgba(255,255,255,.4);border-radius:2px;margin-bottom:9px}
+.sp-sub{
+  font-size:9px;color:rgba(255,255,255,.7);
+  text-align:center;line-height:1.6;
+  max-width:140px;margin-bottom:16px;
+}
+.sp-badge{
+  background:rgba(255,255,255,.15);border-radius:20px;
+  padding:4px 10px;font-size:7px;color:#fff;
+  font-weight:700;letter-spacing:.5px;margin-bottom:28px;
+}
+.sp-bottom{
+  position:absolute;bottom:24px;left:28px;right:28px;
+}
+.sp-track{height:2px;background:rgba(255,255,255,.18);border-radius:2px;overflow:hidden}
+.sp-bar{height:100%;width:50%;background:rgba(255,255,255,.85);border-radius:2px;animation:spbar 1.6s ease-in-out infinite}
+@keyframes spbar{0%{transform:translateX(-120%)}60%{transform:translateX(100%)}100%{transform:translateX(220%)}}
+.sp-ver{text-align:center;font-size:7px;color:rgba(255,255,255,.3);margin-top:7px}
+
+/* ── MAIN SCREEN SIM ── */
+#simMain{
+  width:100%;height:100%;
+  display:flex;flex-direction:column;
+  background:#F1F5F9;
+}
+.ms-header{
+  display:flex;flex-direction:column;align-items:center;
+  padding:20px 14px 14px;
+  transition:background .3s;
+}
+.ms-logo{width:44px;height:44px;border-radius:10px;object-fit:contain;margin-bottom:5px}
+.ms-logo-emoji{font-size:30px;margin-bottom:5px}
+.ms-title{font-size:12.5px;font-weight:800;color:#fff;text-align:center}
+.ms-sub{font-size:9px;color:rgba(255,255,255,.72);text-align:center;margin-top:2px}
+.ms-badge{
+  margin-top:7px;background:rgba(255,255,255,.16);
+  border-radius:20px;padding:3px 10px;
+  font-size:7px;color:#fff;font-weight:700;letter-spacing:.4px;
+}
+.ms-body{flex:1;padding:10px;overflow:hidden;background:#F1F5F9}
+.ms-card{
+  background:#fff;border-radius:10px;padding:10px;
+  margin-bottom:7px;
+  box-shadow:0 1px 6px rgba(0,0,0,.07);
+}
+.ms-lbl{font-size:7.5px;font-weight:700;color:#64748B;letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px}
+.ms-input-row{display:flex;gap:5px;margin-bottom:5px}
+.ms-input{
+  flex:1;height:26px;background:#F8FAFC;
+  border:1.5px solid #E5E7EB;border-radius:6px;
+  font-size:8px;color:#94A3B8;
+  font-family:monospace;display:flex;align-items:center;padding:0 7px;
+}
+.ms-qr-btn{
+  width:26px;height:26px;border-radius:6px;flex-shrink:0;
+  border:1.5px solid #3B82F6;background:#EFF6FF;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;color:#3B82F6;font-weight:bold;
+}
+.ms-divider{
+  display:flex;align-items:center;gap:6px;
+  margin-bottom:6px;
+}
+.ms-divider-line{flex:1;height:1px;background:#F1F5F9}
+.ms-divider-text{font-size:7px;color:#94A3B8;white-space:nowrap}
+.ms-start-btn{
+  height:28px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:9px;font-weight:700;
+  transition:background .3s;
+}
+.ms-feats{background:#fff;border-radius:10px;padding:10px;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+.ms-feat-lbl{font-size:7.5px;font-weight:700;color:#64748B;letter-spacing:.8px;text-transform:uppercase;margin-bottom:7px}
+.ms-feat{
+  display:flex;align-items:center;gap:6px;
+  padding:4px 6px;border-radius:7px;
+  background:#F8FAFC;margin-bottom:4px;font-size:7.5px;color:#374151;
+}
+.ms-feat:last-child{margin:0}
+.ms-check{
+  width:13px;height:13px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:6.5px;font-weight:bold;flex-shrink:0;
+  transition:background .3s;
+}
+.ms-footer{
+  background:#F8FAFF;border-top:1px solid #EEF2FF;
+  text-align:center;padding:4px;font-size:7px;color:#94A3B8;
+}
+
+/* ────── PREVIEW PANEL LABELS ────── */
+.prev-label{
+  font-size:10px;font-weight:700;color:var(--text3);
+  letter-spacing:.5px;text-transform:uppercase;
+  margin-bottom:2px;
+}
+.prev-note{font-size:10.5px;color:var(--text3);text-align:center;margin-top:8px}
+
+/* ────── INFO BOXES ────── */
+.info-box{
+  background:rgba(59,130,246,.07);
+  border:1px solid rgba(59,130,246,.2);
+  border-radius:var(--r2);padding:12px 14px;
+  font-size:12px;color:#93C5FD;line-height:1.8;
+}
+.warn-box{
+  background:rgba(245,158,11,.07);
+  border:1px solid rgba(245,158,11,.2);
+  border-radius:var(--r2);padding:10px 14px;
+  font-size:11.5px;color:#FCD34D;line-height:1.7;
+}
+.summary-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:6px;
+}
+.summary-item{
+  background:var(--surface3);border-radius:var(--r2);
+  padding:8px 10px;
+}
+.summary-item .sk{font-size:10px;color:var(--text3);margin-bottom:2px}
+.summary-item .sv{font-size:12px;font-weight:600;color:var(--text);word-break:break-all}
+
+/* ────── STEP LIST ────── */
+.steps{list-style:none;counter-reset:step;padding:0}
+.steps li{
+  counter-increment:step;
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:12px;color:var(--text2);
+  padding:5px 0;line-height:1.5;
+}
+.steps li::before{
+  content:counter(step);
+  display:flex;align-items:center;justify-content:center;
+  width:20px;height:20px;border-radius:50%;
+  background:rgba(59,130,246,.15);color:var(--blue2);
+  font-size:10px;font-weight:700;flex-shrink:0;margin-top:1px;
+}
+
+/* ────── OVERLAY SLIDER ────── */
+.sl-row{display:flex;align-items:center;gap:10px;margin-top:10px}
+.sl-row label{font-size:11px;font-weight:600;color:var(--text2);white-space:nowrap;min-width:90px}
+.sl-row input[type=range]{flex:1;accent-color:var(--blue)}
+.sl-val{font-size:11px;font-weight:700;color:var(--blue2);min-width:34px;text-align:right}
+
+/* ────── TOAST ────── */
+.toast{
+  position:fixed;bottom:20px;right:20px;
+  background:var(--surface3);color:var(--text);
+  padding:10px 16px;border-radius:var(--r);
+  font-size:13px;font-weight:600;
+  border:1px solid var(--border2);
+  box-shadow:var(--shadow);
+  display:flex;align-items:center;gap:8px;
+  transform:translateY(70px);opacity:0;
+  transition:all .3s cubic-bezier(.34,1.56,.64,1);
+  z-index:999;pointer-events:none;
+}
+.toast.show{transform:translateY(0);opacity:1}
+</style>
 </head>
 <body>
 
-<!-- TOP BAR -->
+<!-- ═══ TOPBAR ═══ -->
 <nav class="topbar">
-  <a class="topbar-brand" href="#">
-    <div class="shield">🛡</div>
-    <span><em>EzamBro</em> APK Builder</span>
+  <a class="brand" href="#">
+    <div class="brand-icon">🛡</div>
+    <div class="brand-name">Ezam<span>Bro</span></div>
   </a>
   <div class="topbar-right">
-    <span class="topbar-badge">PENGATURAN + BUILD</span>
-    <a class="gh-link" href="#" id="ghRepoLink" target="_blank">⭐ GitHub Repo</a>
+    <span class="pill">APK BUILDER</span>
+    <a class="gh-btn" href="#" id="ghRepoLink" target="_blank">⭐ GitHub Repo</a>
   </div>
 </nav>
 
-<!-- PAGE -->
-<div class="page">
-  <div class="page-title">
-    <h1>Konfigurasi &amp; Build APK</h1>
-    <p>Atur tampilan, PIN pengawas, dan identitas aplikasi — lalu klik <strong>Build APK</strong> untuk otomatis generate APK via GitHub Actions.</p>
-  </div>
+<div class="layout">
 
-  <!-- LEFT COL -->
-  <div class="form-col">
+<!-- ═══════════════════════════════════════════
+     LEFT: FORM COLUMN
+════════════════════════════════════════════ -->
+<div class="main-col">
 
-    <!-- 1. IDENTITAS GITHUB -->
-    <div class="card build-panel">
-      <div class="card-header">
-        <div class="ico ico-purple">🔑</div>
-        <div>
-          <h2>Koneksi GitHub</h2>
-          <p>Token &amp; repo untuk trigger GitHub Actions workflow</p>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="field">
-          <label>GitHub Personal Access Token (PAT)</label>
-          <div class="gh-token-field">
-            <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"
-              oninput="saveGhSettings()" spellcheck="false" autocomplete="off" />
-            <button class="toggle-vis" onclick="toggleTokenVis()" title="Tampilkan/Sembunyikan">👁</button>
-          </div>
-          <p class="hint">Buat di <strong>GitHub → Settings → Developer settings → Personal access tokens (classic)</strong>. Scope yang dibutuhkan: <strong>repo</strong> (untuk private repo) atau <strong>public_repo</strong> (untuk public). Token disimpan di browser Anda saja, tidak dikirim ke server lain.</p>
-        </div>
-        <div class="field row2">
-          <div class="field" style="margin:0">
-            <label>Username GitHub</label>
-            <input type="text" id="ghOwner" placeholder="username-anda" oninput="saveGhSettings(); updateRepoLink()" />
-          </div>
-          <div class="field" style="margin:0">
-            <label>Nama Repository</label>
-            <input type="text" id="ghRepo" placeholder="emes-exam-browser" oninput="saveGhSettings(); updateRepoLink()" />
-          </div>
-        </div>
-        <div class="field">
-          <label>Nama Workflow File</label>
-          <input type="text" id="ghWorkflow" value="build.yml" placeholder="build.yml" oninput="saveGhSettings()" />
-          <p class="hint">Nama file workflow di <code>.github/workflows/</code>. Default: <strong>build.yml</strong></p>
-        </div>
-        <div style="margin-top:4px">
-          <button class="btn btn-secondary btn-sm" onclick="testConnection()">🔌 Test Koneksi</button>
-          <span id="connStatus" style="font-size:12px; margin-left:10px; font-weight:600"></span>
-        </div>
-      </div>
+  <!-- ── GITHUB CONNECTION ── -->
+  <div class="section-label">Koneksi GitHub</div>
+
+  <div class="card card-featured">
+    <div class="card-head">
+      <div class="card-ico ico-blue">🔑</div>
+      <div><h3>GitHub Actions</h3><p>Token &amp; repo untuk trigger build otomatis</p></div>
     </div>
-
-    <!-- 2. LOGO -->
-    <div class="card">
-      <div class="card-header">
-        <div class="ico ico-gold">🖼</div>
-        <div>
-          <h2>Logo Aplikasi</h2>
-          <p>Gambar yang tampil di layar utama &amp; ikon launcher</p>
+    <div class="card-body">
+      <div class="field">
+        <label>Personal Access Token (PAT)</label>
+        <div class="token-wrap">
+          <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"
+            oninput="saveGH()" spellcheck="false" autocomplete="off"/>
+          <button class="eye-btn" onclick="toggleToken()">👁</button>
         </div>
+        <p class="hint">Buat di <strong>GitHub → Settings → Developer settings → Personal access tokens (classic)</strong>. Scope: <code>repo</code> (private) atau <code>public_repo</code> (public). Hanya tersimpan di browser Anda.</p>
       </div>
-      <div class="card-body">
-        <div class="logo-upload-zone" id="dropZone" onclick="document.getElementById('logoInput').click()">
-          <input type="file" id="logoInput" accept="image/*" />
-          <div class="logo-preview-wrap">
-            <div class="logo-preview-img empty" id="logoPreviewBox">🛡</div>
-            <div class="logo-upload-text">
-              <h3 id="logoFileName">Belum ada logo</h3>
-              <p>Klik atau drag &amp; drop gambar PNG/JPG/SVG di sini</p>
-              <div class="logo-actions">
-                <button class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); document.getElementById('logoInput').click()">📁 Pilih File</button>
-                <button class="btn btn-ghost btn-sm" id="btnRemoveLogo" onclick="event.stopPropagation(); removeLogo()" style="display:none">✕ Hapus</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <p class="hint" style="margin-top:10px">Ukuran disarankan: <strong>512×512 px</strong>. Catatan: logo harus ditempatkan manual di Android Studio (drag &amp; drop ke Image Asset). Build APK menggunakan logo default jika belum diganti di repo.</p>
-      </div>
-    </div>
-
-    <!-- 3. NAMA & DESKRIPSI -->
-    <div class="card">
-      <div class="card-header">
-        <div class="ico ico-blue">✏️</div>
-        <div>
-          <h2>Nama &amp; Deskripsi</h2>
-          <p>Teks yang muncul di header layar utama Android</p>
-        </div>
-      </div>
-      <div class="card-body">
+      <div class="row2">
         <div class="field">
-          <label>Nama Aplikasi (Launcher)</label>
-          <input type="text" id="appName" value="Emes Exam Browser" maxlength="40"
-            placeholder="Contoh: SMKN 1 Exam Browser" oninput="updatePreview()" />
-          <p class="hint">Tampil di launcher Android dan notification bar. Maks. 40 karakter.</p>
+          <label>Username GitHub</label>
+          <input type="text" id="ghOwner" placeholder="username-anda" oninput="saveGH();updateRepoLink()"/>
         </div>
         <div class="field">
-          <label>Judul Header (Layar Utama)</label>
-          <input type="text" id="appTitle" value="Emes Exam Browser" maxlength="40"
-            placeholder="Contoh: Portal Ujian SMKN 1" oninput="updatePreview()" />
-          <p class="hint">Teks besar di dalam header aplikasi. Bisa sama dengan nama di atas.</p>
-        </div>
-        <div class="field">
-          <label>Subtitle / Deskripsi</label>
-          <input type="text" id="appSubtitle" value="Safe browsing untuk ujian online" maxlength="60"
-            placeholder="Contoh: Portal CBT SMKN 1 Kota" oninput="updatePreview()" />
-          <p class="hint">Teks kecil di bawah judul. Maks. 60 karakter.</p>
+          <label>Nama Repository</label>
+          <input type="text" id="ghRepo" placeholder="emes-exam-browser" oninput="saveGH();updateRepoLink()"/>
         </div>
       </div>
-    </div>
-
-    <!-- 4. WARNA -->
-    <div class="card">
-      <div class="card-header">
-        <div class="ico ico-blue">🎨</div>
-        <div>
-          <h2>Warna Aplikasi</h2>
-          <p>Warna header dan tombol utama</p>
-        </div>
+      <div class="field">
+        <label>Workflow File</label>
+        <input type="text" id="ghWorkflow" value="build.yml" oninput="saveGH()"/>
+        <p class="hint">Nama file di <code>.github/workflows/</code>. Default: <strong>build.yml</strong></p>
       </div>
-      <div class="card-body">
-        <div class="field">
-          <label>Warna Header</label>
-          <div class="color-row">
-            <input type="color" id="colorPrimary" value="#1A3A5C" oninput="syncHex('colorPrimary','hexPrimary')" />
-            <input class="color-hex" id="hexPrimary" type="text" value="#1A3A5C" maxlength="7"
-              oninput="syncColor('hexPrimary','colorPrimary')" spellcheck="false" />
-          </div>
-          <div class="color-presets" id="presetsHeader"></div>
-        </div>
-        <div class="field">
-          <label>Warna Tombol &amp; Aksen</label>
-          <div class="color-row">
-            <input type="color" id="colorAccent" value="#2E7BF6" oninput="syncHex('colorAccent','hexAccent')" />
-            <input class="color-hex" id="hexAccent" type="text" value="#2E7BF6" maxlength="7"
-              oninput="syncColor('hexAccent','colorAccent')" spellcheck="false" />
-          </div>
-          <div class="color-presets" id="presetsAccent"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 5. KEAMANAN -->
-    <div class="card">
-      <div class="card-header">
-        <div class="ico ico-orange">🔒</div>
-        <div>
-          <h2>Pengaturan Keamanan</h2>
-          <p>PIN pengawas dan identitas package Android</p>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="field">
-          <label>PIN Pengawas (Exit PIN)</label>
-          <div class="pin-field">
-            <input type="text" id="exitPin" value="1234" maxlength="8" inputmode="numeric"
-              placeholder="4-8 digit angka" oninput="checkPinStrength()" />
-            <span class="pin-strength pin-weak" id="pinStrengthBadge">Lemah</span>
-          </div>
-          <p class="hint">PIN yang harus dimasukkan pengawas untuk keluar dari mode ujian. <strong>Jangan gunakan 1234!</strong></p>
-        </div>
-        <div class="field">
-          <label>Package ID Android</label>
-          <input type="text" id="packageId" value="id.emes.exambrowser"
-            placeholder="id.sekolahku.exambrowser" oninput="validatePackageId()" />
-          <p class="hint">Format: <code>id.namaorganisasi.namaapp</code> — hanya huruf kecil, angka, dan titik. Ini adalah identitas unik APK di perangkat.</p>
-        </div>
-        <div class="field">
-          <label>Versi APK</label>
-          <input type="text" id="versionName" value="1.1.0" placeholder="1.0.0" maxlength="15" />
-          <p class="hint">Format semantic versioning: <strong>MAJOR.MINOR.PATCH</strong></p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 6. EXPORT KODE -->
-    <div class="card">
-      <div class="card-header">
-        <div class="ico ico-green">📦</div>
-        <div>
-          <h2>Export Konfigurasi Manual</h2>
-          <p>Salin kode untuk ditempel ke Android Studio (opsional)</p>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="export-tabs">
-          <button class="tab-btn active" onclick="switchTab('tab-strings',this)">strings.xml</button>
-          <button class="tab-btn" onclick="switchTab('tab-colors',this)">colors.xml</button>
-          <button class="tab-btn" onclick="switchTab('tab-json',this)">config.json</button>
-        </div>
-        <div class="tab-pane active" id="tab-strings">
-          <div class="code-block" id="codeStrings"><button class="copy-btn" onclick="copyCode('codeStrings')">Salin</button></div>
-        </div>
-        <div class="tab-pane" id="tab-colors">
-          <div class="code-block" id="codeColors"><button class="copy-btn" onclick="copyCode('codeColors')">Salin</button></div>
-        </div>
-        <div class="tab-pane" id="tab-json">
-          <div class="code-block" id="codeJson"><button class="copy-btn" onclick="copyCode('codeJson')">Salin</button></div>
-          <p class="hint" style="margin-top:10px">File JSON ini bisa dihosting dan dibaca oleh aplikasi saat startup untuk konfigurasi dinamis tanpa rebuild APK.</p>
-        </div>
-        <div style="margin-top:18px" class="save-row">
-          <button class="btn btn-primary" onclick="saveConfig()">💾 Simpan ke Browser</button>
-          <button class="btn btn-gold" onclick="downloadJson()">⬇ Unduh config.json</button>
-          <span class="saved-indicator" id="savedIndicator">✓ Tersimpan</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- 7. BUILD APK -->
-    <div class="card build-panel" id="buildCard">
-      <div class="card-header">
-        <div class="ico ico-purple">🚀</div>
-        <div>
-          <h2>Build APK via GitHub Actions</h2>
-          <p>Trigger workflow otomatis — APK siap diunduh dalam ~3 menit</p>
-        </div>
-      </div>
-      <div class="card-body">
-        <p style="font-size:13px; color:var(--text); line-height:1.7; margin-bottom:16px">
-          Klik tombol di bawah untuk mengirim semua pengaturan ke GitHub Actions. Workflow akan mem-patch kode sumber, build APK, lalu hasilnya bisa diunduh dari <strong>Actions → Artifacts</strong>.
-        </p>
-
-        <div style="background:#EFF6FF; border:1.5px solid #BFDBFE; border-radius:10px; padding:14px; margin-bottom:16px; font-size:12.5px; line-height:1.8; color:#1E40AF">
-          <strong>Ringkasan yang akan di-build:</strong><br>
-          📱 <span id="summaryName">Emes Exam Browser</span><br>
-          🎨 Header: <span id="summaryHeader">#1A3A5C</span> &nbsp;|&nbsp; Tombol: <span id="summaryAccent">#2E7BF6</span><br>
-          🔒 PIN: <span id="summaryPin">****</span> &nbsp;|&nbsp; Package: <span id="summaryPkg">id.emes.exambrowser</span><br>
-          🏷 Versi: <span id="summaryVer">1.1.0</span>
-        </div>
-
-        <button class="btn btn-primary" id="btnBuild" onclick="triggerBuild()" style="width:100%;justify-content:center;height:46px;font-size:15px">
-          🚀 Build APK Sekarang
-        </button>
-
-        <!-- Status box -->
-        <div class="build-status-box" id="buildStatusBox">
-          <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">
-            Status Build
-          </div>
-          <div class="build-run" id="buildRun">
-            <div class="run-status waiting" id="runStatusDot"></div>
-            <div class="run-meta">
-              <div class="run-name" id="runName">Memulai workflow…</div>
-              <div class="run-detail" id="runDetail">Mengirim ke GitHub Actions</div>
-            </div>
-            <a href="#" class="run-link" id="runLink" target="_blank" style="display:none">Buka ↗</a>
-          </div>
-          <div class="build-log" id="buildLog"></div>
-          <a href="#" class="artifact-link" id="artifactLink" style="display:none" target="_blank">
-            ⬇ Unduh APK (Artifacts)
-          </a>
-        </div>
-      </div>
-    </div>
-
-  </div><!-- /form-col -->
-
-  <!-- RIGHT COL: PREVIEW (sticky) -->
-  <div class="preview-col" style="position:sticky;top:76px">
-    <div class="card" style="padding:16px 16px 20px">
-      <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:14px;padding-left:4px">
-        📱 Preview Layar Utama
-      </div>
-      <div class="phone-frame">
-        <div class="phone-screen" style="background:#F5F7FB">
-          <!-- Header solid -->
-          <div class="sim-header" id="simHeader" style="background:#1A3A5C">
-            <img id="simLogo" src="" alt="" style="display:none;width:52px;height:52px;object-fit:contain;border-radius:8px" />
-            <span id="simLogoPlaceholder" style="font-size:32px;line-height:1">🛡</span>
-            <div class="sim-app-name" id="simAppName">Emes Exam Browser</div>
-            <div class="sim-subtitle" id="simSubtitle">Safe browsing untuk ujian online</div>
-            <div style="margin-top:6px;background:#E8F0FE;border-radius:20px;padding:3px 10px;font-size:7.5px;color:#2E7BF6;font-weight:700;letter-spacing:0.5px">🛡  SECURE EXAM MODE</div>
-          </div>
-          <!-- Body -->
-          <div class="sim-body">
-            <!-- URL Card -->
-            <div style="background:#fff;border-radius:12px;padding:12px;margin-bottom:8px;box-shadow:0 1px 4px rgba(0,0,0,0.06)">
-              <div class="sim-label">URL UJIAN</div>
-              <div style="display:flex;gap:5px;margin-bottom:6px">
-                <div class="sim-input" style="flex:1;margin:0;font-family:monospace">https://ujian...</div>
-                <div style="width:26px;height:26px;border-radius:7px;border:1.5px solid #2E7BF6;background:#EFF6FF;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;font-weight:bold;color:#2E7BF6">⬚</div>
-              </div>
-              <div style="text-align:center;color:#9CA3AF;font-size:7.5px;margin-bottom:6px">— atau scan QR Code —</div>
-              <div class="sim-btn" id="simBtn" style="background:#2E7BF6;border-radius:10px">Mulai Ujian</div>
-            </div>
-            <!-- Feature card -->
-            <div style="background:#fff;border-radius:12px;padding:12px;box-shadow:0 1px 4px rgba(0,0,0,0.06)">
-              <div style="font-size:8px;font-weight:700;color:#6B7280;letter-spacing:0.8px;margin-bottom:8px">FITUR KEAMANAN</div>
-              <div class="sim-feat-item"><span class="sim-feat-check">✓</span>Tombol Back &amp; Home diblokir</div>
-              <div class="sim-feat-item"><span class="sim-feat-check">✓</span>Fullscreen tanpa gangguan</div>
-              <div class="sim-feat-item"><span class="sim-feat-check">✓</span>PIN pengawas untuk keluar</div>
-              <div class="sim-feat-item"><span class="sim-feat-check">✓</span>Screenshot diblokir</div>
-            </div>
-          </div>
-          <!-- Copyright bar -->
-          <div style="background:#F8FAFF;border-top:1px solid #EEF2FF;text-align:center;padding:5px;font-size:7.5px;color:#9CA3AF">© 2026 Emes EduTech</div>
-        </div>
-      </div>
-      <p style="text-align:center;font-size:11px;color:var(--muted);margin-top:12px">
-        Preview simulasi. Tampilan aktual bisa sedikit berbeda.
-      </p>
-    </div>
-
-    <!-- PIN INFO card -->
-    <div class="card" style="margin-top:16px">
-      <div class="card-body" style="padding:16px">
-        <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">ℹ️ Cara Kerja Builder</div>
-        <ol style="padding-left:16px;font-size:12px;line-height:2;color:var(--text)">
-          <li>Isi token GitHub &amp; nama repo</li>
-          <li>Atur nama, warna, dan PIN</li>
-          <li>Klik <strong>Build APK</strong></li>
-          <li>Tunggu ~3 menit</li>
-          <li>Unduh APK dari link Artifacts</li>
-        </ol>
-        <div style="margin-top:12px;padding:10px;background:#FEF3C7;border-radius:8px;font-size:11.5px;color:#92400E;line-height:1.6">
-          ⚠️ <strong>Pastikan</strong> file <code>.github/workflows/build.yml</code> dan <code>scripts/apply_config.py</code> sudah ada di repo GitHub Anda.
-        </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-top:4px">
+        <button class="btn btn-secondary btn-sm" onclick="testConn()">🔌 Test Koneksi</button>
+        <span id="connStatus" style="font-size:12px;font-weight:600"></span>
       </div>
     </div>
   </div>
 
-</div><!-- /page -->
+  <!-- ── LOGO ── -->
+  <div class="section-label">Identitas Visual</div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-ico ico-gold">🖼</div>
+      <div><h3>Logo Aplikasi</h3><p>Tampil di splash screen, header &amp; ikon launcher</p></div>
+    </div>
+    <div class="card-body">
+      <div class="upload-zone" id="logoZone" onclick="document.getElementById('logoFile').click()">
+        <input type="file" id="logoFile" accept="image/*"/>
+        <div class="upload-inner">
+          <div class="upload-thumb" id="logoThumb">🛡</div>
+          <div class="upload-text">
+            <h4 id="logoName">Belum ada logo</h4>
+            <p>Klik atau drag &amp; drop PNG/JPG/SVG</p>
+            <div class="upload-actions">
+              <button class="btn btn-secondary btn-sm" onclick="e(event);document.getElementById('logoFile').click()">📁 Pilih</button>
+              <button class="btn btn-danger btn-sm" id="logoRemove" onclick="e(event);removeLogo()" style="display:none">✕ Hapus</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="hint">Ukuran optimal: <strong>512×512 px</strong>, PNG transparan. Logo otomatis tampil di splash &amp; header preview di sebelah kanan.</p>
+    </div>
+  </div>
+
+  <!-- ── NAMA & DESKRIPSI ── -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-ico ico-cyan">✏️</div>
+      <div><h3>Nama &amp; Deskripsi</h3><p>Teks di splash screen dan layar utama</p></div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <label>Nama Aplikasi (Launcher)</label>
+        <input type="text" id="appName" value="Emes Exam Browser" maxlength="40" oninput="refresh()"/>
+        <p class="hint">Tampil di launcher &amp; notification bar Android. Maks. 40 karakter.</p>
+      </div>
+      <div class="field">
+        <label>Judul di Splash &amp; Header</label>
+        <input type="text" id="appTitle" value="Emes Exam Browser" maxlength="40" oninput="refresh()"/>
+      </div>
+      <div class="field">
+        <label>Subtitle / Tagline</label>
+        <input type="text" id="appSubtitle" value="Safe browsing untuk ujian online" maxlength="60" oninput="refresh()"/>
+        <p class="hint">Teks kecil di bawah judul. Maks. 60 karakter.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SPLASH SCREEN ── -->
+  <div class="section-label">Splash Screen</div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-ico ico-purple">🌅</div>
+      <div><h3>Pengaturan Splash Screen</h3><p>Layar loading ~2–3 detik saat app pertama dibuka</p></div>
+    </div>
+    <div class="card-body">
+
+      <!-- BG Mode -->
+      <div class="field">
+        <label>Background Splash</label>
+        <div class="seg" style="width:100%">
+          <button class="seg-btn on" id="spBgColorBtn" onclick="setSplashBgMode('color')">🎨 Warna Solid</button>
+          <button class="seg-btn" id="spBgImgBtn" onclick="setSplashBgMode('image')">🖼️ Gambar</button>
+        </div>
+      </div>
+
+      <!-- Warna splash -->
+      <div id="spColorWrap">
+        <div class="field">
+          <label>Warna Background</label>
+          <div class="color-row">
+            <input type="color" id="cSplash" value="#1A3A5C" oninput="syncHex('cSplash','hSplash')"/>
+            <input class="color-hex" id="hSplash" value="#1A3A5C" maxlength="7" oninput="syncColor('hSplash','cSplash')"/>
+          </div>
+          <div class="color-swatches" id="swSplash"></div>
+        </div>
+      </div>
+
+      <!-- Gambar splash -->
+      <div id="spImageWrap" style="display:none">
+        <div class="field">
+          <label>Gambar Background Splash</label>
+          <div class="upload-zone" id="spBgZone" onclick="document.getElementById('spBgFile').click()">
+            <input type="file" id="spBgFile" accept="image/*"/>
+            <div class="upload-inner">
+              <div class="upload-thumb" id="spBgThumb" style="background:#1A3A5C">
+                <img id="spBgImg" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:10px" alt=""/>
+              </div>
+              <div class="upload-text">
+                <h4 id="spBgName">Pilih gambar splash</h4>
+                <p>PNG/JPG, portrait (9:16) direkomendasikan</p>
+                <div class="upload-actions">
+                  <button class="btn btn-secondary btn-sm" onclick="e(event);document.getElementById('spBgFile').click()">📁 Pilih</button>
+                  <button class="btn btn-danger btn-sm" id="spBgRemove" onclick="e(event);removeSpBg()" style="display:none">✕</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sl-row">
+          <label>Overlay gelap:</label>
+          <input type="range" id="spOverlay" min="0" max="85" value="50" oninput="document.getElementById('spOverlayVal').textContent=this.value+'%';refreshSplash()"/>
+          <span id="spOverlayVal" class="sl-val">50%</span>
+        </div>
+      </div>
+
+      <!-- Warna teks splash -->
+      <div class="field">
+        <label>Warna Teks Splash</label>
+        <div class="color-row">
+          <input type="color" id="cSplashTxt" value="#ffffff" oninput="syncHex('cSplashTxt','hSplashTxt')"/>
+          <input class="color-hex" id="hSplashTxt" value="#ffffff" maxlength="7" oninput="syncColor('hSplashTxt','cSplashTxt')"/>
+        </div>
+        <p class="hint">Warna untuk nama, subtitle, dan badge di splash. Default putih.</p>
+      </div>
+
+      <!-- Logo splash -->
+      <div class="field">
+        <label>Logo di Splash Screen</label>
+        <div class="seg" style="width:100%">
+          <button class="seg-btn on" id="spLogoSameBtn" onclick="setSpLogoMode('same')">📌 Sama dengan Logo Utama</button>
+          <button class="seg-btn" id="spLogoCustomBtn" onclick="setSpLogoMode('custom')">🎨 Logo Khusus</button>
+        </div>
+      </div>
+      <div id="spLogoCustomWrap" style="display:none">
+        <div class="upload-zone" id="spLogoZone" onclick="document.getElementById('spLogoFile').click()">
+          <input type="file" id="spLogoFile" accept="image/*"/>
+          <div class="upload-inner">
+            <div class="upload-thumb" id="spLogoThumb">🛡</div>
+            <div class="upload-text">
+              <h4 id="spLogoName">Logo khusus splash</h4>
+              <p>PNG transparan direkomendasikan</p>
+              <div class="upload-actions">
+                <button class="btn btn-secondary btn-sm" onclick="e(event);document.getElementById('spLogoFile').click()">📁 Pilih</button>
+                <button class="btn btn-danger btn-sm" id="spLogoRemove" onclick="e(event);removeSpLogo()" style="display:none">✕</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ukuran logo -->
+      <div class="sl-row">
+        <label>Ukuran logo:</label>
+        <input type="range" id="spLogoSize" min="50" max="130" value="80" oninput="document.getElementById('spLogoSizeVal').textContent=this.value+'px';refreshSplash()"/>
+        <span id="spLogoSizeVal" class="sl-val">80px</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── WARNA APLIKASI ── -->
+  <div class="section-label">Warna Aplikasi</div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-ico ico-blue">🎨</div>
+      <div><h3>Warna Header &amp; Aksen</h3><p>Header layar utama dan tombol aksi</p></div>
+    </div>
+    <div class="card-body">
+      <!-- Header BG -->
+      <div class="field">
+        <label>Background Header</label>
+        <div class="seg" style="width:100%">
+          <button class="seg-btn on" id="hdrColorBtn" onclick="setHdrMode('color')">🎨 Warna</button>
+          <button class="seg-btn" id="hdrImageBtn" onclick="setHdrMode('image')">🖼️ Gambar</button>
+        </div>
+      </div>
+
+      <div id="hdrColorWrap">
+        <div class="color-row">
+          <input type="color" id="cHeader" value="#1A3A5C" oninput="syncHex('cHeader','hHeader')"/>
+          <input class="color-hex" id="hHeader" value="#1A3A5C" maxlength="7" oninput="syncColor('hHeader','cHeader')"/>
+        </div>
+        <div class="color-swatches" id="swHeader"></div>
+      </div>
+
+      <div id="hdrImageWrap" style="display:none">
+        <div class="upload-zone" id="hdrBgZone" onclick="document.getElementById('hdrBgFile').click()">
+          <input type="file" id="hdrBgFile" accept="image/*"/>
+          <div class="upload-inner">
+            <div class="upload-thumb" id="hdrBgThumb" style="background:#1A3A5C">
+              <img id="hdrBgImg" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:10px" alt=""/>
+            </div>
+            <div class="upload-text">
+              <h4 id="hdrBgName">Pilih gambar header</h4>
+              <p>PNG/JPG landscape direkomendasikan</p>
+              <div class="upload-actions">
+                <button class="btn btn-secondary btn-sm" onclick="e(event);document.getElementById('hdrBgFile').click()">📁 Pilih</button>
+                <button class="btn btn-danger btn-sm" id="hdrBgRemove" onclick="e(event);removeHdrBg()" style="display:none">✕</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sl-row">
+          <label>Overlay gelap:</label>
+          <input type="range" id="hdrOverlay" min="0" max="75" value="35" oninput="document.getElementById('hdrOverlayVal').textContent=this.value+'%';refreshMain()"/>
+          <span id="hdrOverlayVal" class="sl-val">35%</span>
+        </div>
+      </div>
+
+      <!-- Warna aksen -->
+      <div class="field" style="margin-top:16px">
+        <label>Warna Tombol &amp; Aksen</label>
+        <div class="color-row">
+          <input type="color" id="cAccent" value="#2E7BF6" oninput="syncHex('cAccent','hAccent')"/>
+          <input class="color-hex" id="hAccent" value="#2E7BF6" maxlength="7" oninput="syncColor('hAccent','cAccent')"/>
+        </div>
+        <div class="color-swatches" id="swAccent"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── KEAMANAN ── -->
+  <div class="section-label">Keamanan &amp; Identitas</div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-ico ico-red">🔒</div>
+      <div><h3>PIN &amp; Package</h3><p>Keamanan exit dan identitas APK di perangkat</p></div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <label>PIN Pengawas (Exit PIN)</label>
+        <div class="pin-wrap">
+          <input type="text" id="exitPin" value="1234" maxlength="8" inputmode="numeric" placeholder="4–8 digit" oninput="checkPin()"/>
+          <span class="pin-badge pin-weak" id="pinBadge">Lemah</span>
+        </div>
+        <p class="hint">PIN yang harus dimasukkan pengawas untuk keluar dari mode ujian. <strong>Jangan pakai 1234!</strong></p>
+      </div>
+      <div class="field">
+        <label>Package ID Android</label>
+        <input type="text" id="pkgId" value="id.emes.exambrowser" placeholder="id.sekolah.exambrowser" oninput="validatePkg()"/>
+        <p class="hint">Format: <code>id.namaorganisasi.namaapp</code> — huruf kecil, angka, titik saja.</p>
+      </div>
+      <div class="field">
+        <label>Versi APK</label>
+        <input type="text" id="versionName" value="1.1.0" maxlength="15" placeholder="1.0.0" oninput="refresh()"/>
+        <p class="hint">Format: <strong>MAJOR.MINOR.PATCH</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── EXPORT KODE ── -->
+  <div class="section-label">Export Konfigurasi</div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-ico ico-green">📦</div>
+      <div><h3>Export Manual</h3><p>Salin kode untuk Android Studio (opsional)</p></div>
+    </div>
+    <div class="card-body" style="padding-bottom:0">
+      <div class="etabs">
+        <button class="etab on" onclick="switchExportTab('eStrings',this)">strings.xml</button>
+        <button class="etab" onclick="switchExportTab('eColors',this)">colors.xml</button>
+        <button class="etab" onclick="switchExportTab('eJson',this)">config.json</button>
+      </div>
+      <div class="epane on" id="eStrings"><div class="codeblock" id="codeStrings"><button class="copy-btn" onclick="copyCode('codeStrings')">Salin</button></div></div>
+      <div class="epane" id="eColors"><div class="codeblock" id="codeColors"><button class="copy-btn" onclick="copyCode('codeColors')">Salin</button></div></div>
+      <div class="epane" id="eJson"><div class="codeblock" id="codeJson"><button class="copy-btn" onclick="copyCode('codeJson')">Salin</button></div></div>
+      <div class="save-row" style="padding:16px 0">
+        <button class="btn btn-secondary" onclick="saveConfig()">💾 Simpan ke Browser</button>
+        <button class="btn btn-gold" onclick="dlJson()">⬇ Unduh config.json</button>
+        <span class="saved-ok" id="savedOk">✓ Tersimpan</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── BUILD APK ── -->
+  <div class="section-label">Build APK</div>
+
+  <div class="card card-featured" id="buildCard">
+    <div class="card-head">
+      <div class="card-ico ico-purple">🚀</div>
+      <div><h3>Build via GitHub Actions</h3><p>APK siap dalam ~3 menit tanpa Android Studio</p></div>
+    </div>
+    <div class="card-body">
+      <div class="info-box">
+        <strong>Ringkasan Build:</strong><br/>
+        📱 <span id="sumName">Emes Exam Browser</span><br/>
+        🎨 Header: <span id="sumHdr">#1A3A5C</span> &nbsp;·&nbsp; Tombol: <span id="sumAcc">#2E7BF6</span><br/>
+        🔒 PIN: <span id="sumPin">****</span> &nbsp;·&nbsp; Package: <span id="sumPkg">id.emes.exambrowser</span><br/>
+        🏷 Versi: <span id="sumVer">1.1.0</span>
+      </div>
+
+      <button class="btn btn-primary btn-big" id="btnBuild" onclick="triggerBuild()">
+        🚀 Build APK Sekarang
+      </button>
+
+      <div class="build-status" id="buildStatus">
+        <div class="run-row" id="runRow">
+          <div class="run-dot wait" id="runDot"></div>
+          <div class="run-meta">
+            <div class="run-title" id="runTitle">Memulai…</div>
+            <div class="run-sub" id="runSub">Mengirim ke GitHub Actions</div>
+          </div>
+          <a href="#" class="run-link" id="runLink" style="display:none" target="_blank">Buka ↗</a>
+        </div>
+        <div class="build-log" id="buildLog"></div>
+        <a href="#" class="artifact-btn" id="artifactBtn" style="display:none" target="_blank">⬇ Unduh APK (Artifacts)</a>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main-col -->
+
+
+<!-- ═══════════════════════════════════════════
+     RIGHT: SIDEBAR / PREVIEW
+════════════════════════════════════════════ -->
+<div class="sidebar">
+
+  <!-- Preview Tabs -->
+  <div class="prev-tabs">
+    <button class="prev-tab on" id="ptSplash" onclick="showPrev('splash')">🌅 Splash</button>
+    <button class="prev-tab" id="ptMain" onclick="showPrev('main')">📱 Layar Utama</button>
+  </div>
+
+  <!-- ── SPLASH PREVIEW ── -->
+  <div id="prevSplash">
+    <p class="prev-label">Preview Splash Screen</p>
+    <div class="phone-outer">
+      <div class="phone-shell">
+        <div class="phone-screen">
+          <div class="phone-notch"></div>
+          <div id="simSplash" style="background:#1A3A5C">
+            <div class="sp-logo-ring" id="spLogoRing">
+              <img id="spLogoImg" src="" alt="" style="display:none"/>
+              <span id="spLogoEmoji" class="sp-emoji">🛡</span>
+            </div>
+            <div class="sp-name" id="spName">Emes Exam Browser</div>
+            <div class="sp-line" id="spLine"></div>
+            <div class="sp-sub" id="spSub">Safe browsing untuk ujian online</div>
+            <div class="sp-badge" id="spBadge">🛡 SECURE EXAM MODE</div>
+            <div class="sp-bottom">
+              <div class="sp-track"><div class="sp-bar"></div></div>
+              <div class="sp-ver" id="spVer">v1.1.0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="prev-note">Tampil ~2.8 detik saat app dibuka</p>
+  </div>
+
+  <!-- ── MAIN SCREEN PREVIEW ── -->
+  <div id="prevMain" style="display:none">
+    <p class="prev-label">Preview Layar Utama</p>
+    <div class="phone-outer">
+      <div class="phone-shell">
+        <div class="phone-screen">
+          <div class="phone-notch"></div>
+          <div id="simMain">
+            <!-- Header -->
+            <div class="ms-header" id="msHeader" style="background:#1A3A5C">
+              <img id="msLogoImg" src="" alt="" class="ms-logo" style="display:none"/>
+              <span id="msLogoEmoji" class="ms-logo-emoji">🛡</span>
+              <div class="ms-title" id="msTitle">Emes Exam Browser</div>
+              <div class="ms-sub" id="msSub">Safe browsing untuk ujian online</div>
+              <div class="ms-badge">🛡 SECURE EXAM MODE</div>
+            </div>
+            <!-- Body -->
+            <div class="ms-body">
+              <div class="ms-card">
+                <div class="ms-lbl">URL Ujian</div>
+                <div class="ms-input-row">
+                  <div class="ms-input">https://ujian.sekolah.id/...</div>
+                  <div class="ms-qr-btn" id="msQrBtn">⬚</div>
+                </div>
+                <div class="ms-divider">
+                  <div class="ms-divider-line"></div>
+                  <span class="ms-divider-text">atau scan QR pengawas</span>
+                  <div class="ms-divider-line"></div>
+                </div>
+                <div class="ms-start-btn" id="msStartBtn" style="background:#2E7BF6">Mulai Ujian</div>
+              </div>
+              <div class="ms-feats">
+                <div class="ms-feat-lbl">Fitur Keamanan</div>
+                <div class="ms-feat"><span class="ms-check" id="ch1" style="background:#2E7BF6">✓</span>Back &amp; Home diblokir</div>
+                <div class="ms-feat"><span class="ms-check" id="ch2" style="background:#2E7BF6">✓</span>Fullscreen tanpa gangguan</div>
+                <div class="ms-feat"><span class="ms-check" id="ch3" style="background:#2E7BF6">✓</span>PIN pengawas untuk keluar</div>
+                <div class="ms-feat"><span class="ms-check" id="ch4" style="background:#2E7BF6">✓</span>Screenshot diblokir</div>
+                <div class="ms-feat"><span class="ms-check" id="ch5" style="background:#2E7BF6">✓</span>Scan QR URL ujian</div>
+              </div>
+            </div>
+            <div class="ms-footer">© 2026 Emes EduTech</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="prev-note">Simulasi tampilan aktual</p>
+  </div>
+
+  <!-- ── CARA KERJA ── -->
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px">
+    <p style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px">Cara Kerja</p>
+    <ol class="steps">
+      <li>Isi token GitHub &amp; nama repo</li>
+      <li>Upload logo &amp; atur tampilan splash</li>
+      <li>Tentukan warna &amp; nama aplikasi</li>
+      <li>Set PIN pengawas yang kuat</li>
+      <li>Klik <strong>Build APK Sekarang</strong></li>
+      <li>Tunggu ~3 menit, unduh APK</li>
+    </ol>
+    <div class="warn-box" style="margin-top:12px">
+      ⚠️ Pastikan <code>.github/workflows/build.yml</code> dan <code>scripts/apply_config.py</code> sudah ada di repo Anda.
+    </div>
+  </div>
+
+</div><!-- /sidebar -->
+</div><!-- /layout -->
 
 <!-- TOAST -->
 <div class="toast" id="toast">
   <span id="toastIcon">✓</span>
-  <span id="toastMsg">Tersimpan</span>
+  <span id="toastMsg">OK</span>
 </div>
 
 <script>
-// ─── STATE ───────────────────────────────────────────────────────────────────
-let logoDataUrl = null;
-let buildRunId  = null;
-let pollTimer   = null;
+// ═══ STATE ═══════════════════════════════════════════════════════════════════
+let S = {
+  logoUrl:      null,
+  spBgUrl:      null,
+  spLogoUrl:    null,
+  hdrBgUrl:     null,
+  spBgMode:     'color',   // 'color' | 'image'
+  spLogoMode:   'same',    // 'same'  | 'custom'
+  hdrMode:      'color',   // 'color' | 'image'
+};
+let pollTimer = null;
 
-// ─── COLOR PRESETS ───────────────────────────────────────────────────────────
-const HEADER_PRESETS = ['#1A3A5C','#0F2440','#1E3A5F','#7C3AED','#065F46','#7C2D12','#1F2937','#831843'];
-const ACCENT_PRESETS = ['#2E7BF6','#10B981','#F59E0B','#EF4444','#8B5CF6','#EC4899','#06B6D4','#F97316'];
+// ═══ COLOR SWATCHES ═══════════════════════════════════════════════════════════
+const SW_HEADER = ['#1A3A5C','#0F2440','#1E3A5F','#7C3AED','#065F46','#7C2D12','#1F2937','#831843'];
+const SW_ACCENT = ['#2E7BF6','#10B981','#F59E0B','#EF4444','#8B5CF6','#EC4899','#06B6D4','#F97316'];
+const SW_SPLASH = ['#1A3A5C','#0F2440','#3B0764','#052E16','#450A0A','#1C1917','#0C4A6E','#4A044E'];
 
-function renderPresets(containerId, colors, colorId, hexId) {
-  const el = document.getElementById(containerId);
+function mkSwatches(id, colors, cid, hid) {
+  const el = document.getElementById(id); if (!el) return;
   el.innerHTML = '';
   colors.forEach(c => {
-    const s = document.createElement('div');
-    s.className = 'color-swatch';
-    s.style.background = c;
-    s.title = c;
-    s.onclick = () => {
-      document.getElementById(colorId).value = c;
-      document.getElementById(hexId).value   = c;
-      updatePreview(); updateSummary(); updateAllCode();
+    const d = document.createElement('div');
+    d.className = 'swatch'; d.style.background = c; d.title = c;
+    d.onclick = () => {
+      document.getElementById(cid).value = c;
+      document.getElementById(hid).value = c;
+      refresh();
     };
-    el.appendChild(s);
+    el.appendChild(d);
   });
 }
 
-function syncHex(colorId, hexId) {
-  document.getElementById(hexId).value = document.getElementById(colorId).value;
-  updatePreview(); updateSummary(); updateAllCode();
+function syncHex(cid, hid) {
+  document.getElementById(hid).value = document.getElementById(cid).value;
+  refresh();
 }
-function syncColor(hexId, colorId) {
-  const v = document.getElementById(hexId).value;
+function syncColor(hid, cid) {
+  const v = document.getElementById(hid).value;
   if (/^#[0-9A-Fa-f]{6}$/.test(v)) {
-    document.getElementById(colorId).value = v;
-    updatePreview(); updateSummary(); updateAllCode();
+    document.getElementById(cid).value = v;
+    refresh();
   }
 }
 
-// ─── HEADER BACKGROUND IMAGE ─────────────────────────────────────────────────
-let headerBgDataUrl = null;
-let headerBgMode    = 'color'; // 'color' | 'image'
+// ═══ UI HELPERS ═══════════════════════════════════════════════════════════════
+function e(ev) { ev.stopPropagation(); }
+function v(id) { return document.getElementById(id)?.value || ''; }
+function el(id) { return document.getElementById(id); }
 
-function switchHeaderTab(mode) {
-  headerBgMode = mode;
-  document.getElementById('tabColor').classList.toggle('active', mode === 'color');
-  document.getElementById('tabImage').classList.toggle('active', mode === 'image');
-  document.getElementById('tabColorBtn').classList.toggle('active', mode === 'color');
-  document.getElementById('tabImageBtn').classList.toggle('active', mode === 'image');
-  updatePreview();
+// ═══ PREVIEW TAB ══════════════════════════════════════════════════════════════
+function showPrev(tab) {
+  const isSplash = tab === 'splash';
+  el('prevSplash').style.display = isSplash ? '' : 'none';
+  el('prevMain').style.display   = isSplash ? 'none' : '';
+  el('ptSplash').classList.toggle('on', isSplash);
+  el('ptMain').classList.toggle('on', !isSplash);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const hbgInput = document.getElementById('hbgInput');
-  if (hbgInput) hbgInput.addEventListener('change', e => {
-    if (e.target.files[0]) readHeaderBg(e.target.files[0]);
+// ═══ MODE SWITCHES ════════════════════════════════════════════════════════════
+function setSplashBgMode(mode) {
+  S.spBgMode = mode;
+  el('spColorWrap').style.display = mode === 'color' ? '' : 'none';
+  el('spImageWrap').style.display = mode === 'image' ? '' : 'none';
+  el('spBgColorBtn').classList.toggle('on', mode === 'color');
+  el('spBgImgBtn').classList.toggle('on', mode === 'image');
+  refreshSplash();
+}
+function setSpLogoMode(mode) {
+  S.spLogoMode = mode;
+  el('spLogoCustomWrap').style.display = mode === 'custom' ? '' : 'none';
+  el('spLogoSameBtn').classList.toggle('on', mode === 'same');
+  el('spLogoCustomBtn').classList.toggle('on', mode === 'custom');
+  refreshSplash();
+}
+function setHdrMode(mode) {
+  S.hdrMode = mode;
+  el('hdrColorWrap').style.display = mode === 'color' ? '' : 'none';
+  el('hdrImageWrap').style.display = mode === 'image' ? '' : 'none';
+  el('hdrColorBtn').classList.toggle('on', mode === 'color');
+  el('hdrImageBtn').classList.toggle('on', mode === 'image');
+  refreshMain();
+}
+
+// ═══ FILE READERS ═════════════════════════════════════════════════════════════
+function readFile(file, cb) {
+  const r = new FileReader();
+  r.onload = ev => cb(ev.target.result);
+  r.readAsDataURL(file);
+}
+
+function loadLogo(file) {
+  readFile(file, url => {
+    S.logoUrl = url;
+    const t = el('logoThumb');
+    t.innerHTML = `<img src="${url}" style="width:100%;height:100%;object-fit:contain;border-radius:8px"/>`;
+    el('logoName').textContent = file.name;
+    el('logoRemove').style.display = '';
+    refresh();
   });
-  // drag & drop
-  const z = document.getElementById('hbgDropZone');
-  if (z) {
-    z.addEventListener('dragover', e => { e.preventDefault(); z.style.borderColor='var(--accent)'; });
-    z.addEventListener('dragleave', () => { z.style.borderColor=''; });
-    z.addEventListener('drop', e => { e.preventDefault(); z.style.borderColor=''; if (e.dataTransfer.files[0]) readHeaderBg(e.dataTransfer.files[0]); });
-  }
-});
-
-function readHeaderBg(file) {
-  const r = new FileReader();
-  r.onload = ev => {
-    headerBgDataUrl = ev.target.result;
-    // Update preview box
-    const img = document.getElementById('hbgPreviewImg');
-    img.src = headerBgDataUrl; img.style.display = 'block';
-    document.getElementById('hbgOverlayBadge').style.display = '';
-    document.getElementById('hbgFileName').textContent = file.name;
-    document.getElementById('hbgRemoveBtn').style.display = '';
-    document.getElementById('overlaySliderWrap').style.display = 'flex';
-    updateOverlay();
-    updatePreview();
-  };
-  r.readAsDataURL(file);
-}
-
-function removeHeaderBg() {
-  headerBgDataUrl = null;
-  document.getElementById('hbgPreviewImg').src = '';
-  document.getElementById('hbgPreviewImg').style.display = 'none';
-  document.getElementById('hbgOverlayBadge').style.display = 'none';
-  document.getElementById('hbgFileName').textContent = 'Pilih gambar background header';
-  document.getElementById('hbgRemoveBtn').style.display = 'none';
-  document.getElementById('overlaySliderWrap').style.display = 'none';
-  document.getElementById('hbgPreviewBox').style.background = '#1A3A5C';
-  updatePreview();
-}
-
-function updateOverlay() {
-  const v = document.getElementById('overlayOpacity').value;
-  document.getElementById('overlayOpacityVal').textContent = v + '%';
-  const hex = Math.round(v * 2.55).toString(16).padStart(2,'0').toUpperCase();
-  if (headerBgDataUrl) {
-    document.getElementById('hbgPreviewBox').style.background = '';
-  }
-  updatePreview();
-}
-
-// ─── LOGO ────────────────────────────────────────────────────────────────────
-document.getElementById('logoInput').addEventListener('change', e => {
-  if (e.target.files[0]) readLogo(e.target.files[0]);
-});
-function readLogo(file) {
-  const r = new FileReader();
-  r.onload = ev => {
-    logoDataUrl = ev.target.result;
-    const box = document.getElementById('logoPreviewBox');
-    box.innerHTML = `<img src="${logoDataUrl}" style="width:100%;height:100%;object-fit:contain;border-radius:10px"/>`;
-    box.classList.remove('empty');
-    document.getElementById('logoFileName').textContent = file.name;
-    document.getElementById('btnRemoveLogo').style.display = '';
-    const sl = document.getElementById('simLogo');
-    const sp = document.getElementById('simLogoPlaceholder');
-    sl.src = logoDataUrl; sl.style.display = ''; sp.style.display = 'none';
-  };
-  r.readAsDataURL(file);
 }
 function removeLogo() {
-  logoDataUrl = null;
-  const box = document.getElementById('logoPreviewBox');
-  box.innerHTML = '🛡'; box.classList.add('empty');
-  document.getElementById('logoFileName').textContent = 'Belum ada logo';
-  document.getElementById('btnRemoveLogo').style.display = 'none';
-  document.getElementById('logoInput').value = '';
-  document.getElementById('simLogo').style.display = 'none';
-  document.getElementById('simLogoPlaceholder').style.display = '';
-}
-function setupDragDrop() {
-  const z = document.getElementById('dropZone');
-  z.addEventListener('dragover', e => { e.preventDefault(); z.style.borderColor='var(--accent)'; });
-  z.addEventListener('dragleave', () => { z.style.borderColor=''; });
-  z.addEventListener('drop', e => { e.preventDefault(); z.style.borderColor=''; if (e.dataTransfer.files[0]) readLogo(e.dataTransfer.files[0]); });
+  S.logoUrl = null;
+  el('logoThumb').innerHTML = '🛡';
+  el('logoName').textContent = 'Belum ada logo';
+  el('logoRemove').style.display = 'none';
+  el('logoFile').value = '';
+  refresh();
 }
 
-// ─── PREVIEW ─────────────────────────────────────────────────────────────────
-function updatePreview() {
-  const name = document.getElementById('appTitle').value || 'Emes Exam Browser';
-  const sub  = document.getElementById('appSubtitle').value || '';
-  const hc   = document.getElementById('colorPrimary').value;
-  const ac   = document.getElementById('colorAccent').value;
-  document.getElementById('simAppName').textContent  = name;
-  document.getElementById('simSubtitle').textContent = sub;
-  document.getElementById('simBtn').style.background = ac;
+function loadSpBg(file) {
+  readFile(file, url => {
+    S.spBgUrl = url;
+    el('spBgImg').src = url; el('spBgImg').style.display = 'block';
+    el('spBgName').textContent = file.name;
+    el('spBgRemove').style.display = '';
+    el('spBgThumb').style.background = 'none';
+    refreshSplash();
+  });
+}
+function removeSpBg() {
+  S.spBgUrl = null;
+  el('spBgImg').src = ''; el('spBgImg').style.display = 'none';
+  el('spBgName').textContent = 'Pilih gambar splash';
+  el('spBgRemove').style.display = 'none';
+  el('spBgThumb').style.background = '#1A3A5C';
+  el('spBgFile').value = '';
+  refreshSplash();
+}
 
-  const simHeader = document.getElementById('simHeader');
-  if (headerBgMode === 'image' && headerBgDataUrl) {
-    const ov = document.getElementById('overlayOpacity').value;
-    const hex = Math.round(ov * 2.55).toString(16).padStart(2,'0').toUpperCase();
-    simHeader.style.background = '';
-    simHeader.style.backgroundImage = `url(${headerBgDataUrl})`;
-    simHeader.style.backgroundSize  = 'cover';
-    simHeader.style.backgroundPosition = 'center';
-    simHeader.style.position = 'relative';
-    // overlay via pseudo — kita pakai box-shadow inset sebagai workaround
-    simHeader.style.boxShadow = `inset 0 0 0 1000px #000000${hex}`;
+function loadSpLogo(file) {
+  readFile(file, url => {
+    S.spLogoUrl = url;
+    const t = el('spLogoThumb');
+    t.innerHTML = `<img src="${url}" style="width:100%;height:100%;object-fit:contain;border-radius:8px"/>`;
+    el('spLogoName').textContent = file.name;
+    el('spLogoRemove').style.display = '';
+    refreshSplash();
+  });
+}
+function removeSpLogo() {
+  S.spLogoUrl = null;
+  el('spLogoThumb').innerHTML = '🛡';
+  el('spLogoName').textContent = 'Logo khusus splash';
+  el('spLogoRemove').style.display = 'none';
+  el('spLogoFile').value = '';
+  refreshSplash();
+}
+
+function loadHdrBg(file) {
+  readFile(file, url => {
+    S.hdrBgUrl = url;
+    el('hdrBgImg').src = url; el('hdrBgImg').style.display = 'block';
+    el('hdrBgName').textContent = file.name;
+    el('hdrBgRemove').style.display = '';
+    el('hdrBgThumb').style.background = 'none';
+    refreshMain();
+  });
+}
+function removeHdrBg() {
+  S.hdrBgUrl = null;
+  el('hdrBgImg').src = ''; el('hdrBgImg').style.display = 'none';
+  el('hdrBgName').textContent = 'Pilih gambar header';
+  el('hdrBgRemove').style.display = 'none';
+  el('hdrBgThumb').style.background = '#1A3A5C';
+  el('hdrBgFile').value = '';
+  refreshMain();
+}
+
+// ═══ PREVIEW REFRESH ══════════════════════════════════════════════════════════
+function refreshSplash() {
+  const sim = el('simSplash'); if (!sim) return;
+  const bgColor = v('cSplash') || '#1A3A5C';
+  const txtColor = v('cSplashTxt') || '#ffffff';
+  const name = v('appTitle') || 'Emes Exam Browser';
+  const sub  = v('appSubtitle') || '';
+  const ver  = v('versionName') || '1.1.0';
+  const logoSize = parseInt(el('spLogoSize')?.value || 80);
+
+  // Background
+  if (S.spBgMode === 'image' && S.spBgUrl) {
+    const ov = el('spOverlay')?.value || 50;
+    const hexOv = Math.round(ov * 2.55).toString(16).padStart(2,'0').toUpperCase();
+    sim.style.backgroundImage = `url(${S.spBgUrl})`;
+    sim.style.backgroundSize = 'cover';
+    sim.style.backgroundPosition = 'center';
+    sim.style.boxShadow = `inset 0 0 0 1000px #000000${hexOv}`;
+    sim.style.backgroundColor = '';
   } else {
-    simHeader.style.backgroundImage = '';
-    simHeader.style.boxShadow = '';
-    simHeader.style.background = hc;
+    sim.style.backgroundImage = '';
+    sim.style.boxShadow = '';
+    sim.style.backgroundColor = bgColor;
   }
-  updateSummary(); updateAllCode();
-}
 
-function updateSummary() {
-  const n  = document.getElementById('appName').value || 'Emes Exam Browser';
-  const hc = document.getElementById('hexPrimary').value || '#1A3A5C';
-  const ac = document.getElementById('hexAccent').value || '#2E7BF6';
-  const p  = document.getElementById('exitPin').value || '????';
-  const pk = document.getElementById('packageId').value || 'id.emes.exambrowser';
-  const v  = document.getElementById('versionName').value || '1.1.0';
-  document.getElementById('summaryName').textContent   = n;
-  document.getElementById('summaryHeader').textContent = hc.toUpperCase();
-  document.getElementById('summaryAccent').textContent = ac.toUpperCase();
-  document.getElementById('summaryPin').textContent    = '*'.repeat(p.length);
-  document.getElementById('summaryPkg').textContent   = pk;
-  document.getElementById('summaryVer').textContent   = v;
-}
-
-// ─── PIN STRENGTH ─────────────────────────────────────────────────────────────
-function checkPinStrength() {
-  const p   = document.getElementById('exitPin').value;
-  const bad = ['1234','0000','1111','2222','3333','4444','5555','6666','7777','8888','9999','123456'];
-  const b   = document.getElementById('pinStrengthBadge');
-  if (p.length < 4 || bad.includes(p)) {
-    b.textContent = 'Lemah'; b.className = 'pin-strength pin-weak';
+  // Logo
+  const ring = el('spLogoRing');
+  const img  = el('spLogoImg');
+  const emoji = el('spLogoEmoji');
+  const logoSrc = (S.spLogoMode === 'custom' && S.spLogoUrl) ? S.spLogoUrl : S.logoUrl;
+  ring.style.width  = logoSize + 'px';
+  ring.style.height = logoSize + 'px';
+  if (logoSrc) {
+    img.src = logoSrc; img.style.display = 'block'; emoji.style.display = 'none';
   } else {
-    b.textContent = 'OK'; b.className = 'pin-strength pin-ok';
+    img.style.display = 'none'; emoji.style.display = '';
+    emoji.style.fontSize = Math.round(logoSize * 0.42) + 'px';
   }
-  updateSummary();
+
+  // Text & colors
+  el('spName').textContent = name; el('spName').style.color = txtColor;
+  el('spSub').textContent = sub;   el('spSub').style.color = txtColor + 'b3';
+  el('spLine').style.background = txtColor + '60';
+  el('spBadge').style.color = txtColor;
+  el('spBadge').style.background = txtColor === '#ffffff' ? 'rgba(255,255,255,.15)' : 'rgba(0,0,0,.15)';
+  el('spVer').textContent = 'v' + ver;
 }
 
-// ─── PACKAGE ID VALIDATION ───────────────────────────────────────────────────
-function validatePackageId() {
-  const el = document.getElementById('packageId');
-  const ok = /^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$/.test(el.value);
-  el.style.borderColor = ok ? '' : 'var(--danger)';
-  updateSummary();
+function refreshMain() {
+  const hdrColor = v('cHeader') || '#1A3A5C';
+  const accColor = v('cAccent') || '#2E7BF6';
+  const name = v('appTitle') || 'Emes Exam Browser';
+  const sub  = v('appSubtitle') || '';
+
+  // Header background
+  const hdr = el('msHeader');
+  if (S.hdrMode === 'image' && S.hdrBgUrl) {
+    const ov = el('hdrOverlay')?.value || 35;
+    const hexOv = Math.round(ov * 2.55).toString(16).padStart(2,'0').toUpperCase();
+    hdr.style.backgroundImage = `url(${S.hdrBgUrl})`;
+    hdr.style.backgroundSize = 'cover';
+    hdr.style.backgroundPosition = 'center';
+    hdr.style.boxShadow = `inset 0 0 0 1000px #000000${hexOv}`;
+    hdr.style.background = '';
+  } else {
+    hdr.style.backgroundImage = '';
+    hdr.style.boxShadow = '';
+    hdr.style.background = hdrColor;
+  }
+
+  // Logo
+  const msImg   = el('msLogoImg');
+  const msEmoji = el('msLogoEmoji');
+  if (S.logoUrl) {
+    msImg.src = S.logoUrl; msImg.style.display = 'block'; msEmoji.style.display = 'none';
+  } else {
+    msImg.style.display = 'none'; msEmoji.style.display = '';
+  }
+
+  // Text
+  el('msTitle').textContent = name;
+  el('msSub').textContent = sub;
+
+  // Accent color
+  el('msStartBtn').style.background = accColor;
+  el('msQrBtn').style.borderColor = accColor;
+  el('msQrBtn').style.color = accColor;
+  el('msQrBtn').style.background = accColor + '18';
+  ['ch1','ch2','ch3','ch4','ch5'].forEach(id => el(id) && (el(id).style.background = accColor));
 }
 
-// ─── CODE EXPORT ─────────────────────────────────────────────────────────────
-function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function refreshSummary() {
+  const name = v('appName') || 'Emes Exam Browser';
+  const hc   = (v('hHeader') || '#1A3A5C').toUpperCase();
+  const ac   = (v('hAccent') || '#2E7BF6').toUpperCase();
+  const pin  = v('exitPin') || '????';
+  const pkg  = v('pkgId') || 'id.emes.exambrowser';
+  const ver  = v('versionName') || '1.1.0';
+  el('sumName').textContent = name;
+  el('sumHdr').textContent  = hc;
+  el('sumAcc').textContent  = ac;
+  el('sumPin').textContent  = '*'.repeat(pin.length);
+  el('sumPkg').textContent  = pkg;
+  el('sumVer').textContent  = ver;
+}
 
-function updateAllCode() {
-  const name  = esc(document.getElementById('appName').value    || 'Emes Exam Browser');
-  const title = esc(document.getElementById('appTitle').value   || 'Emes Exam Browser');
-  const sub   = esc(document.getElementById('appSubtitle').value|| 'Safe browsing untuk ujian online');
-  const hc    = (document.getElementById('hexPrimary').value  || '#1A3A5C').toUpperCase();
-  const ac    = (document.getElementById('hexAccent').value   || '#2E7BF6').toUpperCase();
+function refreshCode() {
+  const name  = esc(v('appName')    || 'Emes Exam Browser');
+  const title = esc(v('appTitle')   || 'Emes Exam Browser');
+  const sub   = esc(v('appSubtitle')|| 'Safe browsing untuk ujian online');
+  const hc    = (v('hHeader') || '#1A3A5C').toUpperCase();
+  const ac    = (v('hAccent') || '#2E7BF6').toUpperCase();
+  const sc    = (v('hSplash') || '#1A3A5C').toUpperCase();
 
-  document.getElementById('codeStrings').innerHTML =
+  el('codeStrings').innerHTML =
     `<button class="copy-btn" onclick="copyCode('codeStrings')">Salin</button>` +
     `<span class="cmt">&lt;?xml version="1.0" encoding="utf-8"?&gt;\n</span>` +
     `<span class="kw">&lt;resources&gt;\n</span>` +
@@ -788,410 +1381,311 @@ function updateAllCode() {
     `    <span class="kw">&lt;string</span> name=<span class="str">"app_description"</span><span class="kw">&gt;</span>${sub}<span class="kw">&lt;/string&gt;</span>\n` +
     `<span class="kw">&lt;/resources&gt;</span>`;
 
-  const darken = (h,f) => {
+  const dk = (h,f) => {
     const x=h.replace('#','');
-    let r=parseInt(x.slice(0,2),16),g=parseInt(x.slice(2,4),16),b=parseInt(x.slice(4,6),16);
-    return '#'+[r,g,b].map(v=>Math.round(v*f).toString(16).padStart(2,'0')).join('').toUpperCase();
+    return '#'+[0,2,4].map(i=>Math.round(parseInt(x.slice(i,i+2),16)*f).toString(16).padStart(2,'0')).join('').toUpperCase();
   };
 
-  document.getElementById('codeColors').innerHTML =
+  el('codeColors').innerHTML =
     `<button class="copy-btn" onclick="copyCode('codeColors')">Salin</button>` +
     `<span class="cmt">&lt;?xml version="1.0" encoding="utf-8"?&gt;\n</span>` +
     `<span class="kw">&lt;resources&gt;\n</span>` +
-    `    <span class="kw">&lt;color</span> name=<span class="str">"colorHeaderBg"</span><span class="kw">&gt;</span><span class="str">${hc}</span><span class="kw">&lt;/color&gt;</span>\n` +
-    `    <span class="kw">&lt;color</span> name=<span class="str">"colorPrimary"</span><span class="kw">&gt;</span><span class="str">${ac}</span><span class="kw">&lt;/color&gt;</span>\n` +
-    `    <span class="kw">&lt;color</span> name=<span class="str">"colorPrimaryDark"</span><span class="kw">&gt;</span><span class="str">${darken(ac,.85)}</span><span class="kw">&lt;/color&gt;</span>\n` +
-    `    <span class="kw">&lt;color</span> name=<span class="str">"colorAccent"</span><span class="kw">&gt;</span><span class="str">${ac}</span><span class="kw">&lt;/color&gt;</span>\n` +
+    `    <span class="kw">&lt;color</span> name=<span class="str">"colorHeaderBg"</span>&gt;<span class="str">${hc}</span><span class="kw">&lt;/color&gt;</span>\n` +
+    `    <span class="kw">&lt;color</span> name=<span class="str">"colorSplashBg"</span>&gt;<span class="str">${sc}</span><span class="kw">&lt;/color&gt;</span>\n` +
+    `    <span class="kw">&lt;color</span> name=<span class="str">"colorPrimary"</span>&gt;<span class="str">${ac}</span><span class="kw">&lt;/color&gt;</span>\n` +
+    `    <span class="kw">&lt;color</span> name=<span class="str">"colorPrimaryDark"</span>&gt;<span class="str">${dk(ac,.85)}</span><span class="kw">&lt;/color&gt;</span>\n` +
+    `    <span class="kw">&lt;color</span> name=<span class="str">"colorAccent"</span>&gt;<span class="str">${ac}</span><span class="kw">&lt;/color&gt;</span>\n` +
     `<span class="kw">&lt;/resources&gt;</span>`;
 
-  const n2  = document.getElementById('appName').value    || 'Emes Exam Browser';
-  const t2  = document.getElementById('appTitle').value   || 'Emes Exam Browser';
-  const s2  = document.getElementById('appSubtitle').value|| '';
-  const hc2 = (document.getElementById('hexPrimary').value||'#1A3A5C').toUpperCase();
-  const ac2 = (document.getElementById('hexAccent').value ||'#2E7BF6').toUpperCase();
-  const pin = document.getElementById('exitPin').value || '1234';
-  const pkg = document.getElementById('packageId').value || 'id.emes.exambrowser';
-  const ver = document.getElementById('versionName').value || '1.1.0';
-
-  const cfg = { app_name:n2, app_title:t2, app_description:s2, exit_pin:pin,
-    colors:{ header:hc2, button:ac2 }, package_id:pkg, version_name:ver,
-    generated_at: new Date().toISOString() };
-
-  document.getElementById('codeJson').innerHTML =
-    `<button class="copy-btn" onclick="copyCode('codeJson')">Salin</button>` +
-    esc(JSON.stringify(cfg,null,2));
+  const cfg = {
+    app_name:v('appName')||'Emes Exam Browser',
+    app_title:v('appTitle')||'Emes Exam Browser',
+    app_description:v('appSubtitle')||'',
+    exit_pin:v('exitPin')||'1234',
+    colors:{header:hc,splash_bg:(v('hSplash')||'#1A3A5C').toUpperCase(),splash_text:(v('hSplashTxt')||'#FFFFFF').toUpperCase(),button:ac},
+    package_id:v('pkgId')||'id.emes.exambrowser',
+    version_name:v('versionName')||'1.1.0',
+    generated_at:new Date().toISOString()
+  };
+  el('codeJson').innerHTML =
+    `<button class="copy-btn" onclick="copyCode('codeJson')">Salin</button>` + esc(JSON.stringify(cfg,null,2));
 }
 
-function switchTab(id, btn) {
-  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b  => b.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  btn.classList.add('active');
+function refresh() {
+  refreshSplash();
+  refreshMain();
+  refreshSummary();
+  refreshCode();
+}
+
+// ═══ MISC HELPERS ═════════════════════════════════════════════════════════════
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+function checkPin() {
+  const p = v('exitPin');
+  const bad = ['1234','0000','1111','2222','3333','4444','5555','6666','7777','8888','9999','123456'];
+  const b = el('pinBadge');
+  const weak = p.length < 4 || bad.includes(p);
+  b.textContent = weak ? 'Lemah' : 'OK';
+  b.className = 'pin-badge ' + (weak ? 'pin-weak' : 'pin-ok');
+  refreshSummary();
+}
+
+function validatePkg() {
+  const i = el('pkgId');
+  const ok = /^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$/.test(i.value);
+  i.style.borderColor = ok ? '' : 'var(--red)';
+  refreshSummary();
+}
+
+function switchExportTab(id, btn) {
+  document.querySelectorAll('.epane').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.etab').forEach(b=>b.classList.remove('on'));
+  el(id).classList.add('on'); btn.classList.add('on');
 }
 
 function copyCode(id) {
-  const el = document.getElementById(id);
-  const txt = el.innerText.replace(/^Salin\n?/,'');
-  navigator.clipboard.writeText(txt).then(() => showToast('📋','Kode disalin'));
+  const txt = el(id).innerText.replace(/^Salin\n?/,'');
+  navigator.clipboard.writeText(txt).then(()=>toast('📋','Disalin ke clipboard'));
 }
 
-// ─── SAVE / LOAD ─────────────────────────────────────────────────────────────
+// ═══ SAVE / LOAD ══════════════════════════════════════════════════════════════
 function saveConfig() {
   const cfg = {
-    appName: document.getElementById('appName').value,
-    appTitle: document.getElementById('appTitle').value,
-    appSubtitle: document.getElementById('appSubtitle').value,
-    exitPin: document.getElementById('exitPin').value,
-    packageId: document.getElementById('packageId').value,
-    versionName: document.getElementById('versionName').value,
-    colorPrimary: document.getElementById('colorPrimary').value,
-    colorAccent: document.getElementById('colorAccent').value,
-    logoDataUrl,
-    headerBgDataUrl,
-    headerBgMode
+    appName:v('appName'),appTitle:v('appTitle'),appSubtitle:v('appSubtitle'),
+    exitPin:v('exitPin'),pkgId:v('pkgId'),versionName:v('versionName'),
+    cHeader:v('cHeader'),cAccent:v('cAccent'),cSplash:v('cSplash'),cSplashTxt:v('cSplashTxt'),
+    spBgMode:S.spBgMode,spLogoMode:S.spLogoMode,hdrMode:S.hdrMode,
+    logoUrl:S.logoUrl,spBgUrl:S.spBgUrl,spLogoUrl:S.spLogoUrl,hdrBgUrl:S.hdrBgUrl,
+    spOverlay:el('spOverlay')?.value,hdrOverlay:el('hdrOverlay')?.value,spLogoSize:el('spLogoSize')?.value
   };
-  localStorage.setItem('ezambroConfig', JSON.stringify(cfg));
-  const ind = document.getElementById('savedIndicator');
-  ind.classList.add('show'); setTimeout(() => ind.classList.remove('show'), 2500);
-  showToast('💾','Konfigurasi tersimpan di browser');
+  try { localStorage.setItem('ezambro_cfg', JSON.stringify(cfg)); } catch(e){}
+  const ok = el('savedOk'); ok.classList.add('show'); setTimeout(()=>ok.classList.remove('show'),2200);
+  toast('💾','Tersimpan di browser');
 }
-function saveGhSettings() {
-  const gh = {
-    token: document.getElementById('ghToken').value,
-    owner: document.getElementById('ghOwner').value,
-    repo: document.getElementById('ghRepo').value,
-    workflow: document.getElementById('ghWorkflow').value
-  };
-  localStorage.setItem('ezambroGH', JSON.stringify(gh));
+
+function saveGH() {
+  try {
+    localStorage.setItem('ezambro_gh', JSON.stringify({
+      token:v('ghToken'),owner:v('ghOwner'),repo:v('ghRepo'),workflow:v('ghWorkflow')
+    }));
+  } catch(e){}
   updateRepoLink();
 }
+
 function loadSaved() {
   try {
-    const raw = localStorage.getItem('ezambroConfig');
+    const raw = localStorage.getItem('ezambro_cfg');
     if (raw) {
       const c = JSON.parse(raw);
-      if (c.appName)     document.getElementById('appName').value     = c.appName;
-      if (c.appTitle)    document.getElementById('appTitle').value    = c.appTitle;
-      if (c.appSubtitle) document.getElementById('appSubtitle').value = c.appSubtitle;
-      if (c.exitPin)     document.getElementById('exitPin').value     = c.exitPin;
-      if (c.packageId)   document.getElementById('packageId').value   = c.packageId;
-      if (c.versionName) document.getElementById('versionName').value = c.versionName;
-      if (c.colorPrimary) {
-        document.getElementById('colorPrimary').value = c.colorPrimary;
-        document.getElementById('hexPrimary').value   = c.colorPrimary;
-      }
-      if (c.colorAccent) {
-        document.getElementById('colorAccent').value = c.colorAccent;
-        document.getElementById('hexAccent').value   = c.colorAccent;
-      }
-      if (c.logoDataUrl) {
-        logoDataUrl = c.logoDataUrl;
-        const box = document.getElementById('logoPreviewBox');
-        box.innerHTML = `<img src="${c.logoDataUrl}" style="width:100%;height:100%;object-fit:contain;border-radius:10px"/>`;
-        box.classList.remove('empty');
-        document.getElementById('logoFileName').textContent = 'Logo tersimpan';
-        document.getElementById('btnRemoveLogo').style.display = '';
-        // update sim preview
-        const sl = document.getElementById('simLogo');
-        const sp = document.getElementById('simLogoPlaceholder');
-        if (sl && sp) { sl.src = c.logoDataUrl; sl.style.display='block'; sp.style.display='none'; }
-      }
+      const set=(id,val)=>{if(val!=null&&el(id))el(id).value=val};
+      set('appName',c.appName);set('appTitle',c.appTitle);set('appSubtitle',c.appSubtitle);
+      set('exitPin',c.exitPin);set('pkgId',c.pkgId);set('versionName',c.versionName);
+      if(c.cHeader){set('cHeader',c.cHeader);set('hHeader',c.cHeader);}
+      if(c.cAccent){set('cAccent',c.cAccent);set('hAccent',c.cAccent);}
+      if(c.cSplash){set('cSplash',c.cSplash);set('hSplash',c.cSplash);}
+      if(c.cSplashTxt){set('cSplashTxt',c.cSplashTxt);set('hSplashTxt',c.cSplashTxt);}
+      if(c.spOverlay)el('spOverlay').value=c.spOverlay,el('spOverlayVal').textContent=c.spOverlay+'%';
+      if(c.hdrOverlay)el('hdrOverlay').value=c.hdrOverlay,el('hdrOverlayVal').textContent=c.hdrOverlay+'%';
+      if(c.spLogoSize)el('spLogoSize').value=c.spLogoSize,el('spLogoSizeVal').textContent=c.spLogoSize+'px';
+      if(c.logoUrl){S.logoUrl=c.logoUrl;el('logoThumb').innerHTML=`<img src="${c.logoUrl}" style="width:100%;height:100%;object-fit:contain;border-radius:8px"/>`;el('logoName').textContent='Logo tersimpan';el('logoRemove').style.display='';}
+      if(c.spBgUrl){S.spBgUrl=c.spBgUrl;el('spBgImg').src=c.spBgUrl;el('spBgImg').style.display='block';el('spBgName').textContent='Gambar splash tersimpan';el('spBgRemove').style.display='';el('spBgThumb').style.background='none';}
+      if(c.hdrBgUrl){S.hdrBgUrl=c.hdrBgUrl;el('hdrBgImg').src=c.hdrBgUrl;el('hdrBgImg').style.display='block';el('hdrBgName').textContent='Gambar header tersimpan';el('hdrBgRemove').style.display='';el('hdrBgThumb').style.background='none';}
+      if(c.spLogoUrl){S.spLogoUrl=c.spLogoUrl;el('spLogoThumb').innerHTML=`<img src="${c.spLogoUrl}" style="width:100%;height:100%;object-fit:contain;border-radius:8px"/>`;el('spLogoName').textContent='Logo splash tersimpan';el('spLogoRemove').style.display='';}
+      if(c.spBgMode) setSplashBgMode(c.spBgMode);
+      if(c.spLogoMode) setSpLogoMode(c.spLogoMode);
+      if(c.hdrMode) setHdrMode(c.hdrMode);
     }
-  } catch(e) {}
+  } catch(e){}
   try {
-    const raw2 = localStorage.getItem('ezambroGH');
-    if (raw2) {
-      const g = JSON.parse(raw2);
-      if (g.token)    document.getElementById('ghToken').value    = g.token;
-      if (g.owner)    document.getElementById('ghOwner').value    = g.owner;
-      if (g.repo)     document.getElementById('ghRepo').value     = g.repo;
-      if (g.workflow) document.getElementById('ghWorkflow').value = g.workflow;
+    const raw = localStorage.getItem('ezambro_gh');
+    if (raw) {
+      const g = JSON.parse(raw);
+      if(g.token)el('ghToken').value=g.token;
+      if(g.owner)el('ghOwner').value=g.owner;
+      if(g.repo)el('ghRepo').value=g.repo;
+      if(g.workflow)el('ghWorkflow').value=g.workflow;
     }
-  } catch(e) {}
+  } catch(e){}
 }
 
-// ─── DOWNLOAD JSON ────────────────────────────────────────────────────────────
-function downloadJson() {
-  const name = document.getElementById('appName').value    || 'Emes Exam Browser';
-  const title= document.getElementById('appTitle').value   || 'Emes Exam Browser';
-  const sub  = document.getElementById('appSubtitle').value|| '';
-  const pin  = document.getElementById('exitPin').value    || '1234';
-  const pkg  = document.getElementById('packageId').value  || 'id.emes.exambrowser';
-  const ver  = document.getElementById('versionName').value|| '1.1.0';
-  const hc   = (document.getElementById('hexPrimary').value||'#1A3A5C').toUpperCase();
-  const ac   = (document.getElementById('hexAccent').value ||'#2E7BF6').toUpperCase();
-  const cfg  = { app_name:name, app_title:title, app_description:sub, exit_pin:pin,
-    colors:{ header:hc, button:ac }, package_id:pkg, version_name:ver,
-    generated_at: new Date().toISOString() };
-  const blob = new Blob([JSON.stringify(cfg,null,2)], {type:'application/json'});
+function dlJson() {
+  const cfg = {
+    app_name:v('appName')||'Emes Exam Browser',
+    app_title:v('appTitle')||'Emes Exam Browser',
+    app_description:v('appSubtitle')||'',
+    exit_pin:v('exitPin')||'1234',
+    colors:{
+      header:(v('hHeader')||'#1A3A5C').toUpperCase(),
+      splash_bg:(v('hSplash')||'#1A3A5C').toUpperCase(),
+      splash_text:(v('hSplashTxt')||'#FFFFFF').toUpperCase(),
+      button:(v('hAccent')||'#2E7BF6').toUpperCase()
+    },
+    package_id:v('pkgId')||'id.emes.exambrowser',
+    version_name:v('versionName')||'1.1.0',
+    generated_at:new Date().toISOString()
+  };
   const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob); a.download = 'ezambro-config.json'; a.click();
-  showToast('⬇','config.json diunduh');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(cfg,null,2)],{type:'application/json'}));
+  a.download = 'ezambro-config.json'; a.click();
+  toast('⬇','config.json diunduh');
 }
 
-// ─── GITHUB REPO LINK ─────────────────────────────────────────────────────────
+// ═══ GITHUB ═══════════════════════════════════════════════════════════════════
 function updateRepoLink() {
-  const o = document.getElementById('ghOwner').value.trim();
-  const r = document.getElementById('ghRepo').value.trim();
-  const el = document.getElementById('ghRepoLink');
-  if (o && r) {
-    el.href = `https://github.com/${o}/${r}`;
-    el.textContent = `⭐ ${o}/${r}`;
-  } else {
-    el.href = '#';
-    el.textContent = '⭐ GitHub Repo';
-  }
+  const o=v('ghOwner').trim(), r=v('ghRepo').trim(), a=el('ghRepoLink');
+  if(o&&r){a.href=`https://github.com/${o}/${r}`;a.textContent=`⭐ ${o}/${r}`;}
+  else{a.href='#';a.textContent='⭐ GitHub Repo';}
 }
 
-// ─── TOKEN VISIBILITY ─────────────────────────────────────────────────────────
-function toggleTokenVis() {
-  const el = document.getElementById('ghToken');
-  el.type = el.type === 'password' ? 'text' : 'password';
+function toggleToken() {
+  const i = el('ghToken'); i.type = i.type==='password'?'text':'password';
 }
 
-// ─── TEST CONNECTION ──────────────────────────────────────────────────────────
-async function testConnection() {
-  const token    = document.getElementById('ghToken').value.trim();
-  const owner    = document.getElementById('ghOwner').value.trim();
-  const repo     = document.getElementById('ghRepo').value.trim();
-  const statusEl = document.getElementById('connStatus');
-  if (!token || !owner || !repo) {
-    statusEl.textContent = '⚠️ Isi token, username, dan repo dulu';
-    statusEl.style.color = 'var(--gold)';
-    return;
-  }
-  statusEl.textContent = '⏳ Mengecek…'; statusEl.style.color = 'var(--muted)';
+async function testConn() {
+  const t=v('ghToken').trim(),o=v('ghOwner').trim(),r=v('ghRepo').trim(),s=el('connStatus');
+  if(!t||!o||!r){s.textContent='⚠️ Isi token, username, repo dulu';s.style.color='var(--gold)';return;}
+  s.textContent='⏳ Mengecek…';s.style.color='var(--text3)';
   try {
-    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
-      headers: { Authorization: `Bearer ${token}`, 'X-GitHub-Api-Version': '2022-11-28' }
-    });
-    if (res.ok) {
-      const d = await res.json();
-      statusEl.textContent = `✅ Terhubung! (${d.private ? 'Private' : 'Public'})`;
-      statusEl.style.color = 'var(--success)';
-    } else if (res.status === 404) {
-      statusEl.textContent = '❌ Repo tidak ditemukan';
-      statusEl.style.color = 'var(--danger)';
-    } else if (res.status === 401) {
-      statusEl.textContent = '❌ Token tidak valid atau kadaluarsa';
-      statusEl.style.color = 'var(--danger)';
-    } else {
-      statusEl.textContent = `❌ Error: ${res.status}`;
-      statusEl.style.color = 'var(--danger)';
-    }
-  } catch(e) {
-    statusEl.textContent = '❌ Gagal terhubung — cek internet';
-    statusEl.style.color = 'var(--danger)';
-  }
+    const res = await fetch(`https://api.github.com/repos/${o}/${r}`,
+      {headers:{Authorization:`Bearer ${t}`,'X-GitHub-Api-Version':'2022-11-28'}});
+    if(res.ok){const d=await res.json();s.textContent=`✅ Terhubung (${d.private?'Private':'Public'})`;s.style.color='var(--green)';}
+    else if(res.status===404){s.textContent='❌ Repo tidak ditemukan';s.style.color='var(--red)';}
+    else if(res.status===401){s.textContent='❌ Token tidak valid';s.style.color='var(--red)';}
+    else{s.textContent=`❌ HTTP ${res.status}`;s.style.color='var(--red)';}
+  } catch(e){s.textContent='❌ Gagal (cek internet)';s.style.color='var(--red)';}
 }
 
-// ─── TRIGGER BUILD ────────────────────────────────────────────────────────────
-async function triggerBuild() {
-  const token    = document.getElementById('ghToken').value.trim();
-  const owner    = document.getElementById('ghOwner').value.trim();
-  const repo     = document.getElementById('ghRepo').value.trim();
-  const workflow = document.getElementById('ghWorkflow').value.trim() || 'build.yml';
-
-  if (!token || !owner || !repo) {
-    showToast('⚠️','Isi token, username, dan repo dulu di bagian Koneksi GitHub');
-    document.getElementById('buildCard').scrollIntoView({behavior:'smooth'});
-    return;
-  }
-
-  const name  = document.getElementById('appName').value    || 'Emes Exam Browser';
-  const title = document.getElementById('appTitle').value   || 'Emes Exam Browser';
-  const sub   = document.getElementById('appSubtitle').value|| 'Safe browsing untuk ujian online';
-  const pin   = document.getElementById('exitPin').value    || '1234';
-  const pkg   = document.getElementById('packageId').value  || 'id.emes.exambrowser';
-  const ver   = document.getElementById('versionName').value|| '1.1.0';
-  const hc    = (document.getElementById('hexPrimary').value||'#1A3A5C').replace('#','');
-  const ac    = (document.getElementById('hexAccent').value ||'#2E7BF6').replace('#','');
-
-  const btn = document.getElementById('btnBuild');
-  btn.disabled = true; btn.textContent = '⏳ Mengirim ke GitHub…';
-
-  showBuildLog('dim', '📡 Mengirim workflow_dispatch ke GitHub Actions…\n');
-
-  try {
-    // Siapkan header image: jika mode gambar dan ada data, kirim base64
-    let headerImgB64 = '';
-    if (headerBgMode === 'image' && headerBgDataUrl) {
-      // Kirim sebagai data URI lengkap, apply_config.py akan strip prefix-nya
-      // Tapi GitHub Actions inputs max ~65KB — kompres dulu jika terlalu besar
-      headerImgB64 = await compressImageForWorkflow(headerBgDataUrl);
-    }
-
-    const res = await fetch(
-      `https://api.github.com/repos/${owner}/${repo}/actions/workflows/${workflow}/dispatches`,
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-          'X-GitHub-Api-Version': '2022-11-28'
-        },
-        body: JSON.stringify({
-          ref: 'main',
-          inputs: {
-            app_name:        name,
-            app_title:       title,
-            app_description: sub,
-            exit_pin:        pin,
-            header_color:    hc,
-            header_image:    headerImgB64,
-            button_color:    ac,
-            package_id:      pkg,
-            version_name:    ver
-          }
-        })
-      }
-    );
-
-    if (res.status === 204) {
-      showBuildLog('ok', '✅ Workflow berhasil di-trigger!\n');
-      showBuildLog('dim', '⏳ Menunggu runner GitHub Actions memulai…\n');
-      btn.textContent = '⏳ Build sedang berjalan…';
-      document.getElementById('buildStatusBox').classList.add('visible');
-      setRunStatus('queued', 'Antrian GitHub Actions', 'Workflow diterima, menunggu runner…');
-
-      // Wait 5 seconds then start polling
-      setTimeout(() => pollBuildStatus(token, owner, repo), 5000);
-    } else {
-      const err = await res.json().catch(() => ({}));
-      showBuildLog('err', `❌ Gagal: HTTP ${res.status} — ${err.message || 'Unknown error'}\n`);
-      if (res.status === 422) showBuildLog('err', '  → Pastikan branch "main" ada dan workflow_dispatch diaktifkan.\n');
-      if (res.status === 404) showBuildLog('err', '  → Workflow file tidak ditemukan di repo.\n');
-      btn.disabled = false; btn.textContent = '🚀 Build APK Sekarang';
-    }
-  } catch(e) {
-    showBuildLog('err', `❌ Error jaringan: ${e.message}\n`);
-    btn.disabled = false; btn.textContent = '🚀 Build APK Sekarang';
-  }
-}
-
-// ─── COMPRESS IMAGE FOR WORKFLOW INPUT ───────────────────────────────────────
-// GitHub Actions workflow_dispatch inputs dibatasi ~65KB per field.
-// Kita compress gambar ke max 800x300 JPEG quality 70.
-async function compressImageForWorkflow(dataUrl) {
-  return new Promise(resolve => {
-    const img = new Image();
-    img.onload = () => {
-      const MAX_W = 800, MAX_H = 300;
-      let w = img.width, h = img.height;
-      if (w > MAX_W) { h = Math.round(h * MAX_W / w); w = MAX_W; }
-      if (h > MAX_H) { w = Math.round(w * MAX_H / h); h = MAX_H; }
-      const c = document.createElement('canvas');
-      c.width = w; c.height = h;
-      c.getContext('2d').drawImage(img, 0, 0, w, h);
-      // JPEG quality 0.70 untuk kurangi ukuran
-      resolve(c.toDataURL('image/jpeg', 0.70));
+// ═══ BUILD ════════════════════════════════════════════════════════════════════
+async function compressImg(url, mW=800, mH=400) {
+  return new Promise(res => {
+    const img = new Image(); img.onload = () => {
+      let w=img.width,h=img.height;
+      if(w>mW){h=Math.round(h*mW/w);w=mW;}
+      if(h>mH){w=Math.round(w*mH/h);h=mH;}
+      const c=document.createElement('canvas');c.width=w;c.height=h;
+      c.getContext('2d').drawImage(img,0,0,w,h);
+      res(c.toDataURL('image/jpeg',.70));
     };
-    img.onerror = () => resolve('');
-    img.src = dataUrl;
+    img.onerror=()=>res(''); img.src=url;
   });
 }
 
-// ─── POLL BUILD STATUS ────────────────────────────────────────────────────────
-async function pollBuildStatus(token, owner, repo) {
-  clearInterval(pollTimer);
-  let attempts = 0;
-  const MAX = 60; // 5 minutes
-
-  async function check() {
-    attempts++;
-    if (attempts > MAX) {
-      clearInterval(pollTimer);
-      showBuildLog('err', '⏱ Timeout — cek status di GitHub Actions secara langsung.\n');
-      return;
+async function triggerBuild() {
+  const tok=v('ghToken').trim(),own=v('ghOwner').trim(),rep=v('ghRepo').trim();
+  const wf=v('ghWorkflow').trim()||'build.yml';
+  if(!tok||!own||!rep){toast('⚠️','Isi token, username, dan repo dulu');el('buildCard').scrollIntoView({behavior:'smooth'});return;}
+  const btn=el('btnBuild');
+  btn.disabled=true;btn.textContent='⏳ Mengirim ke GitHub…';
+  log('dim','📡 Mengirim workflow_dispatch ke GitHub Actions…\n');
+  el('buildStatus').classList.add('show');
+  try {
+    let hImg='',sImg='';
+    if(S.hdrMode==='image'&&S.hdrBgUrl) hImg=await compressImg(S.hdrBgUrl);
+    if(S.spBgMode==='image'&&S.spBgUrl) sImg=await compressImg(S.spBgUrl,1080,1920);
+    const res=await fetch(`https://api.github.com/repos/${own}/${rep}/actions/workflows/${wf}/dispatches`,{
+      method:'POST',
+      headers:{Authorization:`Bearer ${tok}`,'Content-Type':'application/json','X-GitHub-Api-Version':'2022-11-28'},
+      body:JSON.stringify({ref:'main',inputs:{
+        app_name:v('appName')||'Emes Exam Browser',
+        app_title:v('appTitle')||'Emes Exam Browser',
+        app_description:v('appSubtitle')||'',
+        exit_pin:v('exitPin')||'1234',
+        header_color:(v('hHeader')||'#1A3A5C').replace('#',''),
+        header_image:hImg,
+        splash_image:sImg,
+        button_color:(v('hAccent')||'#2E7BF6').replace('#',''),
+        package_id:v('pkgId')||'id.emes.exambrowser',
+        version_name:v('versionName')||'1.1.0'
+      }})
+    });
+    if(res.status===204){
+      log('ok','✅ Workflow di-trigger!\n');
+      log('dim','⏳ Menunggu runner GitHub Actions…\n');
+      btn.textContent='⏳ Build sedang berjalan…';
+      setRun('queue','Antrian GitHub Actions','Menunggu runner tersedia…');
+      setTimeout(()=>pollBuild(tok,own,rep),5000);
+    } else {
+      const err=await res.json().catch(()=>({}));
+      log('err',`❌ HTTP ${res.status}: ${err.message||'Unknown error'}\n`);
+      if(res.status===422)log('err','  → Pastikan branch "main" ada dan workflow_dispatch diaktifkan.\n');
+      btn.disabled=false;btn.textContent='🚀 Build APK Sekarang';
     }
-    try {
-      const res = await fetch(
-        `https://api.github.com/repos/${owner}/${repo}/actions/runs?per_page=5&event=workflow_dispatch`,
-        { headers: { Authorization: `Bearer ${token}`, 'X-GitHub-Api-Version': '2022-11-28' } }
-      );
-      if (!res.ok) return;
-      const data = await res.json();
-      const run  = data.workflow_runs && data.workflow_runs[0];
-      if (!run) return;
-
-      buildRunId = run.id;
-      const ghUrl = `https://github.com/${owner}/${repo}/actions/runs/${run.id}`;
-      document.getElementById('runLink').href = ghUrl;
-      document.getElementById('runLink').style.display = '';
-
-      const status     = run.status;      // queued | in_progress | completed
-      const conclusion = run.conclusion;  // success | failure | cancelled | null
-
-      if (status === 'completed') {
-        clearInterval(pollTimer);
-        const ok = conclusion === 'success';
-        setRunStatus(`completed-${conclusion}`,
-          ok ? '✅ Build Selesai!' : `❌ Build Gagal (${conclusion})`,
-          ok ? `Selesai dalam ~${elapsed(run)}` : 'Lihat log di GitHub untuk detail');
-        showBuildLog(ok?'ok':'err', ok
-          ? '✅ APK berhasil di-build!\n📦 Unduh dari: Actions → Artifacts → APK-Build\n'
-          : `❌ Build gagal dengan status: ${conclusion}\n   Buka GitHub Actions untuk melihat log.\n`);
-        document.getElementById('btnBuild').disabled = false;
-        document.getElementById('btnBuild').textContent = '🚀 Build APK Lagi';
-        if (ok) {
-          const al = document.getElementById('artifactLink');
-          al.href = `https://github.com/${owner}/${repo}/actions/runs/${run.id}`;
-          al.style.display = 'inline-flex';
-        }
-      } else {
-        setRunStatus(status,
-          status === 'in_progress' ? '🔨 Sedang Build…' : '⏳ Antrian…',
-          `Durasi: ${elapsed(run)}`);
-        showBuildLog('dim', `[${new Date().toLocaleTimeString('id')}] Status: ${status}…\n`);
-      }
-    } catch(e) { /* ignore network fluke */ }
+  } catch(ex){
+    log('err',`❌ Error: ${ex.message}\n`);
+    btn.disabled=false;btn.textContent='🚀 Build APK Sekarang';
   }
-
-  pollTimer = setInterval(check, 5000);
-  check();
 }
 
-function elapsed(run) {
-  const s = new Date(run.created_at);
-  const e = run.updated_at ? new Date(run.updated_at) : new Date();
-  const sec = Math.round((e-s)/1000);
-  return sec < 60 ? `${sec}s` : `${Math.round(sec/60)}m ${sec%60}s`;
+async function pollBuild(tok,own,rep) {
+  clearInterval(pollTimer); let att=0;
+  const check = async () => {
+    if(++att>60){clearInterval(pollTimer);log('err','⏱ Timeout — cek GitHub Actions langsung.\n');return;}
+    try {
+      const res=await fetch(`https://api.github.com/repos/${own}/${rep}/actions/runs?per_page=5&event=workflow_dispatch`,
+        {headers:{Authorization:`Bearer ${tok}`,'X-GitHub-Api-Version':'2022-11-28'}});
+      if(!res.ok)return;
+      const data=await res.json(); const run=data.workflow_runs?.[0]; if(!run)return;
+      const url=`https://github.com/${own}/${rep}/actions/runs/${run.id}`;
+      el('runLink').href=url;el('runLink').style.display='';
+      if(run.status==='completed'){
+        clearInterval(pollTimer);
+        const ok=run.conclusion==='success';
+        setRun(ok?'ok':'fail',ok?'✅ Build Selesai!':`❌ Gagal (${run.conclusion})`,ok?`Selesai dalam ~${elapsed(run)}`:'Lihat log di GitHub Actions');
+        log(ok?'ok':'err',ok?'✅ APK siap!\n📦 Unduh: Actions → Artifacts → APK-Build\n':`❌ Build gagal: ${run.conclusion}\n`);
+        el('btnBuild').disabled=false;el('btnBuild').textContent='🚀 Build APK Lagi';
+        if(ok){el('artifactBtn').href=url;el('artifactBtn').style.display='inline-flex';}
+      } else {
+        setRun(run.status==='in_progress'?'run':'queue',
+          run.status==='in_progress'?'🔨 Sedang Build…':'⏳ Antrian…',
+          `Durasi: ${elapsed(run)}`);
+        log('dim',`[${new Date().toLocaleTimeString('id')}] ${run.status}…\n`);
+      }
+    } catch(e){}
+  };
+  pollTimer=setInterval(check,5000); check();
 }
 
-function setRunStatus(status, name, detail) {
-  document.getElementById('runStatusDot').className = `run-status ${status}`;
-  document.getElementById('runName').textContent    = name;
-  document.getElementById('runDetail').textContent  = detail;
+function elapsed(run){const s=new Date(run.created_at),e=run.updated_at?new Date(run.updated_at):new Date(),sec=Math.round((e-s)/1000);return sec<60?`${sec}s`:`${Math.round(sec/60)}m ${sec%60}s`;}
+function setRun(status,title,sub){el('runDot').className='run-dot '+status;el('runTitle').textContent=title;el('runSub').textContent=sub;}
+function log(cls,msg){const b=el('buildLog');const sp=document.createElement('span');sp.className=cls;sp.textContent=msg;b.appendChild(sp);b.scrollTop=b.scrollHeight;}
+
+// ═══ TOAST ════════════════════════════════════════════════════════════════════
+let tTimer;
+function toast(icon,msg){
+  el('toastIcon').textContent=icon;el('toastMsg').textContent=msg;
+  el('toast').classList.add('show');
+  clearTimeout(tTimer);tTimer=setTimeout(()=>el('toast').classList.remove('show'),2200);
 }
 
-function showBuildLog(cls, msg) {
-  const el = document.getElementById('buildLog');
-  const span = document.createElement('span');
-  span.className = cls; span.textContent = msg;
-  el.appendChild(span);
-  el.scrollTop = el.scrollHeight;
-}
-
-// ─── TOAST ────────────────────────────────────────────────────────────────────
-let toastTimer;
-function showToast(icon, msg) {
-  const t = document.getElementById('toast');
-  document.getElementById('toastIcon').textContent = icon;
-  document.getElementById('toastMsg').textContent  = msg;
-  t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
-}
-
-// ─── INIT ─────────────────────────────────────────────────────────────────────
+// ═══ INIT ═════════════════════════════════════════════════════════════════════
 window.addEventListener('DOMContentLoaded', () => {
-  setupDragDrop();
-  renderPresets('presetsHeader', HEADER_PRESETS, 'colorPrimary', 'hexPrimary');
-  renderPresets('presetsAccent', ACCENT_PRESETS, 'colorAccent',  'hexAccent');
+  // File inputs
+  el('logoFile').addEventListener('change', ev=>ev.target.files[0]&&loadLogo(ev.target.files[0]));
+  el('spBgFile').addEventListener('change', ev=>ev.target.files[0]&&loadSpBg(ev.target.files[0]));
+  el('spLogoFile').addEventListener('change', ev=>ev.target.files[0]&&loadSpLogo(ev.target.files[0]));
+  el('hdrBgFile').addEventListener('change', ev=>ev.target.files[0]&&loadHdrBg(ev.target.files[0]));
+
+  // Drag & drop
+  const dd = (zoneId, fn) => {
+    const z=el(zoneId);
+    z.addEventListener('dragover',ev=>{ev.preventDefault();z.style.borderColor='var(--blue)'});
+    z.addEventListener('dragleave',()=>z.style.borderColor='');
+    z.addEventListener('drop',ev=>{ev.preventDefault();z.style.borderColor='';ev.dataTransfer.files[0]&&fn(ev.dataTransfer.files[0])});
+  };
+  dd('logoZone',loadLogo);
+  dd('spBgZone',loadSpBg);
+  dd('spLogoZone',loadSpLogo);
+  dd('hdrBgZone',loadHdrBg);
+
+  // Swatches
+  mkSwatches('swSplash',SW_SPLASH,'cSplash','hSplash');
+  mkSwatches('swHeader',SW_HEADER,'cHeader','hHeader');
+  mkSwatches('swAccent',SW_ACCENT,'cAccent','hAccent');
+
   loadSaved();
-  updatePreview();
-  updateAllCode();
-  checkPinStrength();
+  refresh();
+  checkPin();
   updateRepoLink();
 });
 </script>
