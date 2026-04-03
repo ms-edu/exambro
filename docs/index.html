@@ -643,7 +643,7 @@ body{
             oninput="saveGH()" spellcheck="false" autocomplete="off"/>
           <button class="eye-btn" onclick="toggleToken()">👁</button>
         </div>
-        <p class="hint">Buat di <strong>GitHub → Settings → Developer settings → Personal access tokens (classic)</strong>. Scope: <code>repo</code> (private) atau <code>public_repo</code> (public). Hanya tersimpan di browser Anda.</p>
+        <p class="hint">Buat di <strong>GitHub → Settings → Developer settings → Personal access tokens (classic)</strong>. Wajib centang scope: <code>repo</code> <strong>DAN</strong> <code>workflow</code> (keduanya diperlukan untuk trigger build). Hanya tersimpan di browser Anda.</p>
       </div>
       <div class="row2">
         <div class="field">
@@ -1547,12 +1547,34 @@ async function testConn() {
   if(!t||!o||!r){s.textContent='⚠️ Isi token, username, repo dulu';s.style.color='var(--gold)';return;}
   s.textContent='⏳ Mengecek…';s.style.color='var(--text3)';
   try {
+    // Step 1: Check repo access
     const res = await fetch(`https://api.github.com/repos/${o}/${r}`,
       {headers:{Authorization:`Bearer ${t}`,'X-GitHub-Api-Version':'2022-11-28'}});
-    if(res.ok){const d=await res.json();s.textContent=`✅ Terhubung (${d.private?'Private':'Public'})`;s.style.color='var(--green)';}
-    else if(res.status===404){s.textContent='❌ Repo tidak ditemukan';s.style.color='var(--red)';}
-    else if(res.status===401){s.textContent='❌ Token tidak valid';s.style.color='var(--red)';}
-    else{s.textContent=`❌ HTTP ${res.status}`;s.style.color='var(--red)';}
+    if(!res.ok){
+      if(res.status===404){s.textContent='❌ Repo tidak ditemukan';s.style.color='var(--red)';}
+      else if(res.status===401){s.textContent='❌ Token tidak valid';s.style.color='var(--red)';}
+      else if(res.status===403){s.textContent='❌ Akses ditolak (token perlu scope: repo + workflow)';s.style.color='var(--red)';}
+      else{s.textContent=`❌ HTTP ${res.status}`;s.style.color='var(--red)';}
+      return;
+    }
+    const d=await res.json();
+    // Step 2: Check workflow permission by listing workflows
+    const wf=v('ghWorkflow').trim()||'build.yml';
+    const wres = await fetch(`https://api.github.com/repos/${o}/${r}/actions/workflows/${wf}`,
+      {headers:{Authorization:`Bearer ${t}`,'X-GitHub-Api-Version':'2022-11-28'}});
+    if(wres.status===403){
+      s.textContent='⚠️ Repo OK tapi TOKEN KURANG SCOPE — tambahkan scope "workflow" di GitHub!';
+      s.style.color='var(--gold)';
+      log('err','❌ Token tidak punya izin "workflow". Buka: GitHub → Settings → Developer settings → Personal access tokens → Edit → centang "workflow"\n');
+      el('buildStatus').classList.add('show');
+      return;
+    }
+    if(wres.status===404){
+      s.textContent=`✅ Repo OK (${d.private?'Private':'Public'}) — tapi workflow "${wf}" belum ada di repo`;
+      s.style.color='var(--gold)';return;
+    }
+    s.textContent=`✅ Terhubung & siap build (${d.private?'Private':'Public'})`;
+    s.style.color='var(--green)';
   } catch(e){s.textContent='❌ Gagal (cek internet)';s.style.color='var(--red)';}
 }
 
@@ -1605,10 +1627,32 @@ async function triggerBuild() {
       btn.textContent='⏳ Build sedang berjalan…';
       setRun('queue','Antrian GitHub Actions','Menunggu runner tersedia…');
       setTimeout(()=>pollBuild(tok,own,rep),5000);
+    } else if(res.status===403){
+      const err=await res.json().catch(()=>({}));
+      log('err','❌ HTTP 403: Token tidak punya akses ke GitHub Actions\n');
+      log('err','\n🔧 CARA FIX:\n');
+      log('err','  1. Buka: github.com → Settings → Developer settings\n');
+      log('err','  2. Pilih: Personal access tokens → Tokens (classic)\n');
+      log('err','  3. Edit token Anda → centang scope "workflow"\n');
+      log('err','  4. Klik "Update token" → salin token baru → paste di sini\n');
+      log('err','\n  Atau buat token baru dengan scope: repo + workflow\n');
+      toast('❌','Token perlu scope "workflow" — lihat log untuk panduan fix');
+      btn.disabled=false;btn.textContent='🚀 Build APK Sekarang';
+      el('buildStatus').classList.add('show');
+    } else if(res.status===404){
+      log('err','❌ HTTP 404: Repo atau workflow tidak ditemukan\n');
+      log('err','  → Pastikan nama repo dan workflow file sudah benar\n');
+      log('err',`  → Cek: github.com/${own}/${rep}/actions\n`);
+      btn.disabled=false;btn.textContent='🚀 Build APK Sekarang';
+    } else if(res.status===422){
+      const err=await res.json().catch(()=>({}));
+      log('err',`❌ HTTP 422: ${err.message||'Unprocessable Entity'}\n`);
+      log('err','  → Pastikan branch "main" ada di repo\n');
+      log('err','  → Pastikan workflow_dispatch sudah ada di file build.yml\n');
+      btn.disabled=false;btn.textContent='🚀 Build APK Sekarang';
     } else {
       const err=await res.json().catch(()=>({}));
       log('err',`❌ HTTP ${res.status}: ${err.message||'Unknown error'}\n`);
-      if(res.status===422)log('err','  → Pastikan branch "main" ada dan workflow_dispatch diaktifkan.\n');
       btn.disabled=false;btn.textContent='🚀 Build APK Sekarang';
     }
   } catch(ex){
