@@ -1628,11 +1628,17 @@ async function triggerBuild() {
   log('dim','📡 Mengirim workflow_dispatch ke GitHub Actions…\n');
   el('buildStatus').classList.add('show');
   try {
-    let hImg='',sImg='';
+    let hImg='',sImg='',logoImg='';
+    if(S.logoUrl){
+      btn.textContent='⏳ Kompres logo…';
+      logoImg=await compressImg(S.logoUrl,512,512,GH_IMG_LIMIT);
+      if(!logoImg){log('err','⚠️ Logo terlalu besar, diabaikan\n');}
+      else{log('dim',`🖼 Logo: ${Math.round(logoImg.length/1024)}KB (base64)\n`);}
+    }
     if(S.hdrMode==='image'&&S.hdrBgUrl){
       btn.textContent='⏳ Kompres gambar header…';
       hImg=await compressImg(S.hdrBgUrl,400,200,GH_IMG_LIMIT);
-      if(!hImg){log('err','⚠️ Gambar header terlalu besar, diabaikan (pakai warna saja)\n');} 
+      if(!hImg){log('err','⚠️ Gambar header terlalu besar, diabaikan (pakai warna saja)\n');}
       else {log('dim',`📷 Header image: ${Math.round(hImg.length/1024)}KB (base64)\n`);}
     }
     if(S.spBgMode==='image'&&S.spBgUrl){
@@ -1650,6 +1656,7 @@ async function triggerBuild() {
       header_color:(v('hHeader')||'#1A3A5C').replace('#',''),
       header_image:hImg,
       splash_image:sImg,
+      logo_image:logoImg,
       button_color:(v('hAccent')||'#2E7BF6').replace('#',''),
       package_id:v('pkgId')||'id.emes.exambrowser',
       version_name:v('versionName')||'1.1.0'

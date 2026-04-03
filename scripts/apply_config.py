@@ -32,6 +32,8 @@ print(f"  Header     : #{HEADER_COLOR}")
 print(f"  Button     : #{BUTTON_COLOR}")
 print(f"  Package ID : {PACKAGE_ID}")
 print(f"  Version    : {VERSION_NAME}")
+LOGO_IMAGE_env = env("LOGO_IMAGE", "")
+print(f"  Logo User  : {'✓ ada' if LOGO_IMAGE_env.strip() else '— pakai ic_launcher'}")
 print(f"  Splash Img : {'✓ ada' if SPLASH_IMAGE.strip() else '— pakai warna'}")
 print(f"  Header Img : {'✓ ada' if HEADER_IMAGE.strip() else '— pakai warna'}")
 print("=" * 56)
@@ -222,6 +224,20 @@ if PACKAGE_ID != OLD_PACKAGE_ID:
         write(manifest_path, manifest2)
         print(f"  ✓ Package directory renamed: {old_dir} → {new_dir}")
 
+# ── 11. Logo user → app_logo.png (transparan, bukan ic_launcher) ──────────
+LOGO_IMAGE = env("LOGO_IMAGE", "")
+APP_LOGO_PATH = "app/src/main/res/drawable/app_logo.png"
+if LOGO_IMAGE.strip():
+    if decode_image(LOGO_IMAGE, APP_LOGO_PATH, "app_logo"):
+        print(f"  ✓ Logo user disimpan sebagai app_logo.png (transparan)")
+    else:
+        if os.path.exists(APP_LOGO_PATH):
+            os.remove(APP_LOGO_PATH)
+else:
+    # Hapus jika tidak ada, supaya Java fallback ke ic_launcher
+    if os.path.exists(APP_LOGO_PATH):
+        os.remove(APP_LOGO_PATH)
+
 print()
 print("✅ Semua file berhasil di-patch. Siap untuk Gradle build.")
-print("\n📝 Logo: gunakan ic_launcher.png di mipmap-hdpi sebagai sumber utama.")
+print("\n📝 Logo: app_logo.png (transparan) dipakai jika ada, fallback ic_launcher.")

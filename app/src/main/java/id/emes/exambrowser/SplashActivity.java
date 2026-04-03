@@ -38,6 +38,9 @@ public class SplashActivity extends AppCompatActivity {
         // ── Terapkan background image jika ada ─────────────────────────────
         applySplashBackground();
 
+        // ── Terapkan logo transparan jika app_logo.png tersedia ────────────
+        applyAppLogo(R.id.splashLogo);
+
         // ── Referensi view ──────────────────────────────────────────────────
         ImageView imgLogo     = findViewById(R.id.splashLogo);
         TextView  tvAppName   = findViewById(R.id.splashAppName);
@@ -126,6 +129,26 @@ public class SplashActivity extends AppCompatActivity {
                     }
                 });
         }, SPLASH_DURATION);
+    }
+
+    /**
+     * Terapkan app_logo.png (transparan) ke ImageView jika tersedia.
+     * Fallback ke ic_launcher jika tidak ada logo user yang di-upload.
+     */
+    private void applyAppLogo(int viewId) {
+        try {
+            int resId = getResources().getIdentifier("app_logo", "drawable", getPackageName());
+            if (resId == 0) return; // Tidak ada logo → tetap pakai ic_launcher
+            android.graphics.drawable.Drawable d = getResources().getDrawable(resId, getTheme());
+            if (d == null) return;
+            ImageView img = findViewById(viewId);
+            img.setImageDrawable(d);
+            img.setBackground(null);   // hapus frame/background apapun
+            img.setPadding(0, 0, 0, 0);
+            img.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        } catch (Exception e) {
+            // Fallback ke ic_launcher
+        }
     }
 
     /**

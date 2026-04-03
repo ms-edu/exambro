@@ -1,11 +1,14 @@
 package id.emes.exambrowser;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -32,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
         // ── Cek apakah ada header background image ────────────────────────
         applyHeaderBackground();
 
+        // ── Terapkan logo transparan jika app_logo.png tersedia ────────────
+        applyAppLogo(R.id.imgAppLogo);
+
         etUrl = findViewById(R.id.etUrl);
         Button btnStart        = findViewById(R.id.btnStart);
         LinearLayout btnScanQr = findViewById(R.id.btnScanQr);
@@ -48,29 +54,64 @@ public class MainActivity extends AppCompatActivity {
      * Jika file header_bg ada di drawable dan bukan placeholder warna,
      * tampilkan sebagai background gambar dengan overlay gelap agar teks tetap terbaca.
      */
+    /**
+     * Terapkan app_logo.png (transparan) ke ImageView jika tersedia.
+     */
+    private void applyAppLogo(int viewId) {
+        try {
+            int resId = getResources().getIdentifier("app_logo", "drawable", getPackageName());
+            if (resId == 0) return;
+            android.graphics.drawable.Drawable d = getResources().getDrawable(resId, getTheme());
+            if (d == null) return;
+            ImageView img = findViewById(viewId);
+            if (img == null) return;
+            img.setImageDrawable(d);
+            img.setBackground(null);   // hapus frame/background apapun
+            img.setPadding(0, 0, 0, 0);
+            img.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        } catch (Exception e) { /* fallback ic_launcher */ }
+    }
+
     private void applyHeaderBackground() {
         try {
-            // Coba load drawable header_bg (PNG yang di-inject saat build)
             int resId = getResources().getIdentifier("header_bg", "drawable", getPackageName());
-            if (resId == 0) return; // tidak ada, pakai warna default
+            if (resId == 0) return;
 
             Drawable d = getResources().getDrawable(resId, getTheme());
             if (d == null) return;
 
-            ImageView imgBg        = findViewById(R.id.imgHeaderBg);
-            View      overlay      = findViewById(R.id.headerOverlay);
-            LinearLayout content   = findViewById(R.id.headerContent);
+            final ImageView  imgBg   = findViewById(R.id.imgHeaderBg);
+            final View       overlay = findViewById(R.id.headerOverlay);
+            final LinearLayout content = findViewById(R.id.headerContent);
+            final FrameLayout frame  = findViewById(R.id.headerFrame);
 
-            // Set gambar
             imgBg.setImageDrawable(d);
-            imgBg.setVisibility(View.VISIBLE);
-            overlay.setVisibility(View.VISIBLE);
+            imgBg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imgBg.setAdjustViewBounds(false);
 
-            // Hapus background solid dari konten agar transparan di atas gambar
-            content.setBackgroundColor(android.graphics.Color.TRANSPARENT);
+            // Setelah layout selesai, cocokkan tinggi imgHeaderBg dengan headerContent
+            frame.getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        frame.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        int h = content.getHeight();
+                        if (h > 0) {
+                            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+                                FrameLayout.LayoutParams.MATCH_PARENT, h);
+                            imgBg.setLayoutParams(lp);
+                            overlay.setLayoutParams(new FrameLayout.LayoutParams(
+                                FrameLayout.LayoutParams.MATCH_PARENT, h));
+                        }
+                        imgBg.setVisibility(View.VISIBLE);
+                        overlay.setVisibility(View.VISIBLE);
+                        content.setBackgroundColor(Color.TRANSPARENT);
+                    }
+                }
+            );
 
         } catch (Exception e) {
-            // Gagal load gambar — pakai warna solid default, tidak masalah
+            // Gagal load — pakai warna solid default
         }
     }
 

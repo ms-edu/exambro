@@ -31,13 +31,15 @@
         android:paddingStart="40dp"
         android:paddingEnd="40dp">
 
-        <!-- Logo -->
+        <!-- Logo — menggunakan app_logo.png (transparan) jika ada, fallback ic_launcher -->
         <ImageView
             android:id="@+id/splashLogo"
             android:layout_width="110dp"
             android:layout_height="110dp"
             android:src="@mipmap/ic_launcher"
-            android:scaleType="fitCenter"
+            android:scaleType="centerInside"
+            android:background="@null"
+            android:padding="0dp"
             android:contentDescription="App Logo" />
 
         <!-- Nama Aplikasi -->
