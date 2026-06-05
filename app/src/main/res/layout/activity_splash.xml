@@ -117,6 +117,7 @@
             android:indeterminate="true"
             android:progressTint="@color/white"
             android:indeterminateTint="@color/white80"
+            android:progressBackgroundTint="@color/white80"
             android:layout_marginBottom="16dp" />
 
         <TextView
